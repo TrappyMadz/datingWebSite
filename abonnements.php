@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: connexion.php");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,33 +33,51 @@
             <a href="messagerie.php">
                 <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
             </a>
-            <a><button class="bouton" href="déconnexion.php">DÉCONNEXION</button></a>
+            <?php
+            session_start();
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+                echo '<a href="deconnexion.php" class="bouton">DECONNEXION</a>';
+            } else {
+                echo '<a href="connexion.php" class="bouton">CONNEXION</a>';
+            }
+            ?>
     </header>
-
+    <h1> Abonnez-vous et gagnez de nombreux avantages ! </h1>
+    <p> Envoyez des messages à vos coup de moteur</p>
+    <p> Soyez au courant des voitures qui sont passées sur votre profil</p>
     <div class="Page_Principale">
-
-        <h1> Abonnez-vous et gagnez de nombreux avantages ! </h1>
         <br>
-        <div id="coteD">
+        <div id="cote">
         <div class="row">
             <div class="col-75">
                 <div class="container">
                     <form action="/action_page.php">
                         <div class="row">
                             <div class="col-50">
+                                <div class="radio-toolbar">
+                                    <input type="radio" id="radioTarif1" name="tarif" value="Tarif1" checked>
+                                    <label for="radioTarif1">1 mois<br>5€</label>
+
+                                    <input type="radio" id="radioTarif2" name="tarif" value="Tarif2">
+                                    <label for="radioTarif2">3 mois<br>13€</label>
+
+                                    <input type="radio" id="radioTarif3" name="tarif" value="Tarif3">
+                                    <label for="radioTarif3">1 an<br>50€</label>
+
+                                </div>
                                 <h3>Adresse de paiement</h3>
                                 <label for="Fname">Nom complet</label>
-                                <input type="text" id="fname" name="firstname">
+                                <input type="text" id="fname" name="firstname" required>
                                 <label for="email">Email</label>
-                                <input type="text" id="email" name="email">
+                                <input type="text" id="email" name="email" required>
                                 <label for="adr">Addresse</label>
-                                <input type="text" id="adr" name="address">
+                                <input type="text" id="adr" name="address" required>
                                 <label for="city">Ville</label>
-                                <input type="text" id="city" name="city">
+                                <input type="text" id="city" name="city" required>
                                 <div class="row">
                                     <div class="col-50">
                                         <label for="departement">Département</label>
-                                        <input type="text" id="departement" name="departement">
+                                        <input type="text" id="departement" name="departement" required>
                                     </div>
                                 </div>
                             </div>
@@ -65,26 +92,25 @@
                                     <img class="card" src="./img/visa.png" alt="Visa">
                                 </div>
                                 <label for="cname">Nom sur la carte</label>
-                                <input type="text" id="cname" name="cardname">
+                                <input type="text" id="cname" name="cardname" required>
                                 <label for="ccnum">Numéro de carte</label>
-                                <input type="text" id="ccnum" name="cardnumber">
+                                <input type="text" id="ccnum" name="cardnumber" required>
                                 <label for="expmonth">Mois d'expiration</label>
-                                <input type="text" id="expmonth" name="expmonth">
+                                <input type="text" id="expmonth" name="expmonth" required>
                                 <div class="row">
                                     <div class="col-50">
                                         <label for="expyear">Année d'expiration</label>
-                                        <input type="text" id="expyear" name="expyear">
+                                        <input type="text" id="expyear" name="expyear" required>
                                     </div>
                                     <div class="col-50">
                                         <label for="cvv">CVV</label>
-                                        <input type="text" id="cvv" name="cvv">
+                                        <input type="text" id="cvv" name="cvv" required>
                                      </div>
                                 </div>
                             </div>
 
                         </div>
-                        <p>Total : 5€/mois</p>
-                        <input type="submit" value="Continuer à payer" class="btn">
+                        <input type="submit" value="Payer" class="btn">
                     </form>
                 </div>
             </div>

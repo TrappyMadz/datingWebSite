@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,14 +22,26 @@
             </a>
             <h2> Pistons & Passions </h1>
         <nav class="NavMenu">
-            <a href="menu.php">MENU</a>
+            <a href="accueil.php">MENU</a>
             <a href="abonnements.php">ABONNEMENTS</a>
             <a href="profil.php">MON PROFIL</a>
         </nav>
             <a href="messagerie.php">
                 <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
             </a>
-            <a><button class="bouton" href="déconnexion.php">DÉCONNEXION</button></a>
+            <?php
+            // Démarrer la session
+            session_start();
+
+            // Vérifier si l'utilisateur est connecté
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+                // Si l'utilisateur est connecté, changer le lien de connexion
+                echo '<a href="deconnexion.php" class="bouton">DECONNEXION</a>';
+            } else {
+                // Si l'utilisateur n'est pas connecté, afficher le lien de connexion
+                echo '<a href="connexion.php" class="bouton">CONNEXION</a>';
+            }
+            ?>
     </header>
 
     <div class="Page_Principale">
