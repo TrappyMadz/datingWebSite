@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
     <div id="Connexion">
         <h2>Connexion</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
         <label for="username">Nom d'utilisateur:</label><br>
         <input type="text" id="username" name="username" required><br>
         <label for="password">Mot de passe:</label><br>
