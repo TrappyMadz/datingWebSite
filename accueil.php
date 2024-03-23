@@ -1,7 +1,11 @@
 <?php
 session_start();
+include 'bdd.php';
+if (!isset($_SESSION['username'])) {
+    header("Location: connexion.php");
+    exit();
+}
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -26,22 +30,19 @@ session_start();
             <a href="abonnements.php">ABONNEMENTS</a>
             <a href="profil.php">MON PROFIL</a>
         </nav>
-            <a href="messagerie.php">
-                <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
-            </a>
-            <?php
-            // Démarrer la session
-            session_start();
-
-            // Vérifier si l'utilisateur est connecté
-            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-                // Si l'utilisateur est connecté, changer le lien de connexion
-                echo '<a href="deconnexion.php" class="bouton">DECONNEXION</a>';
-            } else {
-                // Si l'utilisateur n'est pas connecté, afficher le lien de connexion
-                echo '<a href="connexion.php" class="bouton">CONNEXION</a>';
-            }
-            ?>
+        <?php
+        $username = $_SESSION['username'];
+        $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
+        $resultat = $conn->query($sql);
+        $row = $resultat->fetch_assoc();
+        $statut = $row['statut'];
+        if ($statut == 'abonne') {
+            echo '<a href="messagerie.php">
+                    <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
+                </a>';
+        }
+        ?>
+            <a href="deconnexion.php" class="bouton">DECONNEXION</a>
     </header>
 
     <div class="Page_Principale">
@@ -60,51 +61,93 @@ session_start();
 
         <div class="menuBlock" id="Recommendations">
             <h3> Recommendations : </h3>
+             <?php
+            $sql = "SELECT count(*) as nbr FROM utilisateurs WHERE statut = 'abonne'";
+            $result = $conn->query($sql);         
+            $row = $result->fetch_assoc();
+            echo "Nombre d'abonnés : " . $row['nbr'];
+            $nbrabonne = $row['nbr'];
+            echo "<div class=ZoneProfils>";
+                for ($i= $nbrabonne -1; $i >= 0 ; $i--) { 
+                    echo "<div class=caseProfils>"; 
+                        $sql = "SELECT lien FROM utilisateurs WHERE statut = 'abonne' LIMIT $i, 1 ";
+                        $resultat = $conn->query($sql);
+                        $row = $resultat->fetch_assoc();
+                        $lien = $row['lien'];
+                        echo '<img src="'.$lien.'" width="80em">';
+                        echo '<p>';
+                        $sql = "SELECT * FROM utilisateurs where statut = 'abonne' LIMIT $i, 1";
+                        $res = $conn->query($sql);
+                        $row = $res->fetch_assoc();
+                        echo $row['prenom'];
+                        echo " ";
+                        echo $row['nom'];
+                        echo "<br>";
+                        echo $row['ville'];
+                        echo '</p>';
+                    echo "</div>" ;
+                }
+            
+                if ($nbrabonne < 5) {
+                    for ($i= $nbrabonne ; $i >= 0 ; $i--) { 
+                        echo "<div class=caseProfils>"; 
+                            $sql = "SELECT lien FROM utilisateurs WHERE statut not like 'abonne' LIMIT $i , 1";
+                            $resultat = $conn->query($sql);
+                            $row = $resultat->fetch_assoc();
+                            $lien = $row['lien'];
+                            echo '<img src="'.$lien.'" width="80em">';
+                            echo '<p>';
+                            $sql = "SELECT * FROM utilisateurs where statut not like 'abonne' LIMIT $i, 1";
+                            $res = $conn->query($sql);
+                            $row = $res->fetch_assoc();
+                            echo $row['prenom'];
+                            echo " ";
+                            echo $row['nom'];
+                            echo "<br>";
+                            echo $row['ville'];
+                            echo '</p>';
+                        echo "</div>" ;
+                    }
+                }
+            echo "</div>";
+             ?> 
         </div>
 
         <div class="menuBlock" id="LastProfils">
             <h3> Nos tout derniers membres : </h3>
             <div class="ZoneProfils">
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
+                
+                    <?php
+                        for ($i=4; $i >= 0; $i--) { 
+                             echo "<div class=caseProfils>";
+
+                                $username = $_SESSION['username'];
+                                $sql = "SELECT lien FROM utilisateurs LIMIT $i, 1 ";
+                                $resultat = $conn->query($sql);
+                                $row = $resultat->fetch_assoc();
+                                $lien = $row['lien'];
+                                echo '<img src="'.$lien.'" width="80em">';
+                                echo '<p>';
+                                $sql = "SELECT * FROM utilisateurs LIMIT $i, 1";
+                                $res = $conn->query($sql);
+                                $row = $res->fetch_assoc();
+                                echo $row['prenom'];
+                                echo " ";
+                                echo $row['nom'];
+                                echo "<br>";
+                                echo $row['ville'];
+                                echo '</p>';
+
+                            echo "</div>" ;
+                        }
+                         
+
+
+                    ?>
+                    <!-- <img src="./img/sally.png" alt="Profil 1">
                     <p>Casseandre EEHEEH</p>
-                    <p>localisation japon</p>                            
-                </div>
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
-                    <p>Jacob</p>
-                    <p>localisation japon</p>                            
-                </div>
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
-                    <p>Trauma</p>
-                    <p>localisation japon</p>                            
-                </div>
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
-                    <p>T'as de bô peneux tsais</p>
-                    <p>localisation japon</p>                            
-                </div>
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
-                    <p>Casseandre EEHEEH</p>
-                    <p>localisation japon</p>                            
-                </div>
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
-                    <p>Casseandre EEHEEH</p>
-                    <p>localisation japon</p>                            
-                </div>
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
-                    <p>Casseandre EEHEEH</p>
-                    <p>localisation japon</p>                            
-                </div>
-                <div class="caseProfils">
-                    <img src="./img/sally.png" alt="Profil 1">
-                    <p>Casseandre EEHEEH</p>
-                    <p>localisation japon</p>                            
-                </div>
+                    <p>localisation japon</p>                             -->
+                
             </div>
         </div>
 
