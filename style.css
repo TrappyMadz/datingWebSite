@@ -1,115 +1,173 @@
-@import url("https://fonts.googleapis.com/css2?family=Habibi&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Habibi&display=swap');
 
-body {
-  background-color: rgb(255, 255, 255);
-  color: #7c0a38;
-  font-family: "Habibi", serif;
-  text-align: center;
+body{
+    background-color: rgb(255, 255, 255);
+    color: #7c0a38;
+    font-family: "Habibi", serif;
+    text-align: center;
 }
 
-.bouton {
-  color: #ffffff;
-  background-color: #b9254a;
-
-  border: none;
-  padding: 12px 24px;
-  line-height: 1;
-  border-radius: 10px;
-  /*bord arrondis*/
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 15px;
-  transition: 0.6s ease;
+.bouton{
+    color: #FFFFFF;
+    background-color: #b9254a;
+    
+    border: none;
+    padding: 12px 24px;
+    line-height: 1;
+    border-radius: 10px;
+    /*bord arrondis*/
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    transition: 0.6s ease;  
 }
 .bouton:hover {
-  transition: 0.3s ease;
-  opacity: 0.75;
-  background-color: #e01c67;
+    transition: 0.3s ease;
+    opacity: .75;
+    background-color: #e01c67;
 }
 
+
+
+
+  
 /* --------- Menu : ---------*/
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center; /* Centrer verticalement */
+header{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; /* Centrer verticalement */
 
-  padding: 1rem;
-  padding-right: 5rem;
-  margin-bottom: 3rem;
-
-  top: 0;
-  left: 0;
-  right: 0;
-
-  box-shadow: 0em 7px 12px #ffc7c73d;
+    padding: 1rem; 
+    padding-right: 5rem;
+    padding-left: 5rem;
+    margin-bottom: 3rem;
+    
+    top:0;
+    left:0;
+    right:0;
+  
+    box-shadow: 0em 7px 12px #ffc7c73d;
+    
 }
-.NavMenu {
-  display: flex; /* 5 */
-  list-style: none; /* 6 */
+.NavMenu{
+    display: flex; /* 5 */
+    list-style: none; /* 6 */
 }
 .NavMenu a {
-  padding: 1rem;
+    padding: 1rem;
 
-  margin-right: 3rem;
-  margin-left: 3rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
 
-  text-decoration: none;
-  color: #7c0a38;
+    text-decoration: none;
+    color: #7c0a38;
 
-  border-bottom: 2px solid #a1184f00;
+    border-bottom: 2px solid #a1184f00;
 }
 .NavMenu a:hover {
-  transition: 0.3s ease;
-  color: #dd1267;
-  border-bottom: 2px solid #dd1267;
+
+    transition: 0.3s ease;
+    color: #dd1267;    
+    border-bottom: 2px solid #dd1267;
 }
+
 
 /* Search bar : */
-.SearchBar {
-  text-align: center;
-  padding: 15px 20px;
-}
-.SearchBar input {
-  width: 50%;
-  border: 3px solid #e01c67;
-  padding: 12px;
-  height: 35px;
-  border-radius: 20px;
 
-  font-family: "Courier New", Courier, monospace;
-  font-weight: 900;
-  color: #cf4040;
+.ZoneSearchBar{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
-.SearchBar input:focus {
-  color: #b63042;
+.SearchBar{
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+.SearchBar input{
+    width: 100%;
+    border: 3px solid #e01c67;
+    border-right: none;
+    padding: 5px;
+    height: 30px;
+    border-radius: 10px 0 0 10px;
+    outline: none;
+
+
+    font-size: 20px;
+
+    color: #cf4040;
+}
+.SearchBar input:focus{
+    color: #a50000;
+}
+.SearchIcon{
+    width: 56px;
+    height: 46px;
+    border: 1px solid #e01c67;
+    background: #e01c67;
+    text-align: center;
+    color: #eeeeee;
+    border-radius: 0 10px 10px 0;
+
+    cursor: pointer;
+    font-size: 30px;
 }
 
-.menuBlock {
-  background-color: rgb(255, 255, 255);
-  padding: 20px;
-  margin: 10px;
-  margin-left: 10%;
-  margin-right: 10%;
+
+
+
+.menuBlock{
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    margin: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
 }
-.ZoneProfils {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 30px;
+.ZoneProfils{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
 }
 .caseProfils {
-  width: calc(
-    23% - 20px
-  ); /* 4 produits par ligne avec une marge de 20px entre eux */
-  margin-bottom: 10px;
-  margin: 5px;
-  box-shadow: 0em 7px 12px #ffc7d581;
-  padding: 10px;
-  text-align: center;
+    width: calc(23% - 20px); /* 4 produits par ligne avec une marge de 20px entre eux */
+    margin-bottom: 10px;
+    margin: 5px;
+    box-shadow: 0em 7px 12px #ffc7d581;
+    padding: 10px;
+    text-align: center;
 }
 .caseProfils img {
-  max-width: 50%;
-  height: auto;
-  margin-bottom: 10px;
+    max-width: 50%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+
+/* MESSAGERIE : */
+.mess_zone{
+    width: 70%;
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    border: solid 2px #7c0a38;
+    resize: none;
+}
+.mess_sender{
+    margin-left: 40%;
+    text-align: right;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #ffcccc;
+}
+.mess_recipient{
+    margin-right: 40%;
+    text-align: left;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #ffe7d4;
 }
