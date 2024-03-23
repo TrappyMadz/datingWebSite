@@ -51,12 +51,15 @@ if (!isset($_SESSION['username'])) {
 
         <div class="menuBlock" id="DivRecherche">
             <h3> Chercher quelqu'un : </h3>
-            <div class="SearchBar">
-                <form action="#">
-                    <input type="text" placeholder="Que rechechez-vous ?" name="search">
-                    <button type="submit" class="IconeLoupe" ></button>
+            
+            <div class="ZoneSearchBar">
+                <form class="SearchBar" action="#">
+                    <input type="text" placeholder="Que recherchez-vous ?" name="search">
+                    <button type="submit" class="SearchIcon" >
+                        <i class="fa fa-search"></i>
+                    </button>
                 </form>
-        </div>
+            </div>
         </div>
 
         <div class="menuBlock" id="Recommendations">
