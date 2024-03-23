@@ -51,15 +51,12 @@ if (!isset($_SESSION['username'])) {
 
         <div class="menuBlock" id="DivRecherche">
             <h3> Chercher quelqu'un : </h3>
-            
-            <div class="ZoneSearchBar">
-                <form class="SearchBar" action="#">
-                    <input type="text" placeholder="Que recherchez-vous ?" name="search">
-                    <button type="submit" class="SearchIcon" >
-                        <i class="fa fa-search"></i>
-                    </button>
+            <div class="SearchBar">
+                <form action="#">
+                    <input type="text" placeholder="Que rechechez-vous ?" name="search">
+                    <button type="submit" class="IconeLoupe" ></button>
                 </form>
-            </div>
+        </div>
         </div>
 
         <div class="menuBlock" id="Recommendations">
@@ -70,6 +67,13 @@ if (!isset($_SESSION['username'])) {
             $row = $result->fetch_assoc();
             echo "Nombre d'abonnés : " . $row['nbr'];
             $nbrabonne = $row['nbr'];
+            echo "<br>";
+            $sql = "SELECT count(*) as nbrtot FROM utilisateurs ";
+            $result = $conn->query($sql);         
+            $row = $result->fetch_assoc();
+            echo "Nombre de profils : " . $row['nbrtot'];
+            $nbrtot = $row['nbrtot'];
+            
             echo "<div class=ZoneProfils>";
                 for ($i= $nbrabonne -1; $i >= 0 ; $i--) { 
                     echo "<div class=caseProfils>"; 
@@ -86,23 +90,26 @@ if (!isset($_SESSION['username'])) {
                         echo " ";
                         echo $row['nom'];
                         echo "<br>";
+                        
                         echo $row['ville'];
                         echo '</p>';
                     echo "</div>" ;
                 }
             
-                if ($nbrabonne < 5) {
-                    for ($i= $nbrabonne ; $i >= 0 ; $i--) { 
+                if ( ($nbrabonne < 5 ) && ( $nbrtot + $nbrabonne >= 5  ) ) {
+                    for ($i= 4  - $nbrabonne; $i >= 0 ; $i--) { 
                         echo "<div class=caseProfils>"; 
-                            $sql = "SELECT lien FROM utilisateurs WHERE statut not like 'abonne' LIMIT $i , 1";
+                            $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                             $resultat = $conn->query($sql);
                             $row = $resultat->fetch_assoc();
                             $lien = $row['lien'];
                             echo '<img src="'.$lien.'" width="80em">';
                             echo '<p>';
-                            $sql = "SELECT * FROM utilisateurs where statut not like 'abonne' LIMIT $i, 1";
+                            $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                             $res = $conn->query($sql);
                             $row = $res->fetch_assoc();
+                            
+                            
                             echo $row['prenom'];
                             echo " ";
                             echo $row['nom'];
@@ -110,6 +117,31 @@ if (!isset($_SESSION['username'])) {
                             echo $row['ville'];
                             echo '</p>';
                         echo "</div>" ;
+                        
+                    }
+                }
+                if (($nbrabonne < 5 ) && ( $nbrtot + $nbrabonne < 5  )){
+                    for ($i= $nbrtot  -1; $i >= $nbrabonne ; $i--) { 
+                        echo "<div class=caseProfils>"; 
+                            $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
+                            $resultat = $conn->query($sql);
+                            $row = $resultat->fetch_assoc();
+                            $lien = $row['lien'];
+                            echo '<img src="'.$lien.'" width="80em">';
+                            echo '<p>';
+                            $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
+                            $res = $conn->query($sql);
+                            $row = $res->fetch_assoc();
+                            
+                            
+                            echo $row['prenom'];
+                            echo " ";
+                            echo $row['nom'];
+                            echo "<br>";
+                            echo $row['ville'];
+                            echo '</p>';
+                        echo "</div>" ;
+                        
                     }
                 }
             echo "</div>";
@@ -121,28 +153,55 @@ if (!isset($_SESSION['username'])) {
             <div class="ZoneProfils">
                 
                     <?php
-                        for ($i=4; $i >= 0; $i--) { 
-                             echo "<div class=caseProfils>";
-
-                                $username = $_SESSION['username'];
-                                $sql = "SELECT lien FROM utilisateurs LIMIT $i, 1 ";
+                    if (($nbrabonne < 5 ) && ( $nbrtot + $nbrabonne < 5  )){
+                        for ($i= $nbrtot -1 ; $i >= $nbrabonne ; $i--) { 
+                            echo "<div class=caseProfils>"; 
+                                $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                                 $resultat = $conn->query($sql);
                                 $row = $resultat->fetch_assoc();
                                 $lien = $row['lien'];
                                 echo '<img src="'.$lien.'" width="80em">';
                                 echo '<p>';
-                                $sql = "SELECT * FROM utilisateurs LIMIT $i, 1";
+                                $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                                 $res = $conn->query($sql);
                                 $row = $res->fetch_assoc();
+                                
+                                
                                 echo $row['prenom'];
                                 echo " ";
                                 echo $row['nom'];
                                 echo "<br>";
                                 echo $row['ville'];
                                 echo '</p>';
-
                             echo "</div>" ;
+                            
                         }
+                    }else{
+                        for ($i=4; $i >= 0; $i--) { 
+                            echo "<div class=caseProfils>";
+
+                               $username = $_SESSION['username'];
+                               $sql = "SELECT lien FROM utilisateurs LIMIT $i, 1 ";
+                               $resultat = $conn->query($sql);
+                               $row = $resultat->fetch_assoc();
+                               $lien = $row['lien'];
+                               echo '<img src="'.$lien.'" width="80em">';
+                               echo '<p>';
+                               $sql = "SELECT * FROM utilisateurs LIMIT $i, 1";
+                               $res = $conn->query($sql);
+                               $row = $res->fetch_assoc();
+                               echo $row['prenom'];
+                               echo " ";
+                               echo $row['nom'];
+                               echo "<br>";
+                               echo $row['ville'];
+                               echo '</p>';
+
+                           echo "</div>" ;
+                       }
+                    }
+
+                        
                          
 
 
