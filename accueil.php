@@ -17,7 +17,7 @@
             </a>
             <h2> Pistons & Passions </h1>
         <nav class="NavMenu">
-            <a href="menu.php">MENU</a>
+            <a href="accueil.php">MENU</a>
             <a href="abonnements.php">ABONNEMENTS</a>
             <a href="profil.php">MON PROFIL</a>
         </nav>
