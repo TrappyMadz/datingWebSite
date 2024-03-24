@@ -40,6 +40,7 @@ header{
 
     padding: 1rem; 
     padding-right: 5rem;
+    padding-left: 5rem;
     margin-bottom: 3rem;
     
     top:0;
@@ -73,24 +74,50 @@ header{
 
 
 /* Search bar : */
+
+.ZoneSearchBar{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
 .SearchBar{
-    text-align: center;
-    padding: 15px 20px;
+    width: 100%;
+    position: relative;
+    display: flex;
 }
 .SearchBar input{
-    width: 50%;
+    width: 100%;
     border: 3px solid #e01c67;
-    padding: 12px;
-    height: 35px;
-    border-radius: 20px;
+    border-right: none;
+    padding: 5px;
+    height: 30px;
+    border-radius: 10px 0 0 10px;
+    outline: none;
 
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
+
+    font-size: 20px;
+
     color: #cf4040;
 }
 .SearchBar input:focus{
-    color: #b63042;
-  }
+    color: #a50000;
+}
+.SearchIcon{
+    width: 56px;
+    height: 46px;
+    border: 1px solid #e01c67;
+    background: #e01c67;
+    text-align: center;
+    color: #eeeeee;
+    border-radius: 0 10px 10px 0;
+
+    cursor: pointer;
+    font-size: 30px;
+}
+
+
 
 
 .menuBlock{
@@ -121,3 +148,26 @@ header{
 }
 
 
+/* MESSAGERIE : */
+.mess_zone{
+    width: 70%;
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    border: solid 2px #7c0a38;
+    resize: none;
+}
+.mess_sender{
+    margin-left: 40%;
+    text-align: right;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #ffcccc;
+}
+.mess_recipient{
+    margin-right: 40%;
+    text-align: left;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #ffe7d4;
+}
