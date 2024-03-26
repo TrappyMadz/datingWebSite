@@ -1,15 +1,22 @@
 <?php
-include 'bdd.php';
+include 'nonAccessiblePhpPages/bdd.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    
 
-    $sql = "INSERT INTO utilisateurs (nom_utilisateur, email, mot_de_passe) VALUES ('$username', '$email', '$password')";
+    $sql = "INSERT INTO utilisateurs (nom, prenom, pseudo, email, mot_de_passe, adresse, ville, statut, lien) VALUES ('$name', '$surname','$username', '$email', '$password', '$address', '$city', 'utilisateur', 'https://cdn-icons-png.flaticon.com/512/20/20079.png')";
     
     if ($conn->query($sql) === TRUE) {
         echo "Inscription réussie !";
+        header("Location: connexion.php");
+        exit();
     } else {
         echo "Erreur: " . $sql . "<br>" . $conn->error;
     }
@@ -23,47 +30,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<title>Pistons & Passions</title>
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
 </head>
 <body>
-<header> <!-- Le menu du haut :  -->
-            <!-- le logo (renvoi sur le menu en cliquant) -->
-            <a href="accueil.php" title="Menu">
-                <img id="logoHeader" alt="logo" src="img/logo.png" width="80em">
-            </a>
-            <h2> Pistons & Passions </h1>
-        <nav class="NavMenu">
-            <a href="accueil.php">MENU</a>
-            <a href="abonnements.php">ABONNEMENTS</a>
-            <a href="profil.php">MON PROFIL</a>
-        </nav>
-            <a href="messagerie.php">
-                <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
-            </a>
-            <?php
-            session_start();
-
-            // Vérifier si l'utilisateur est connecté
-            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-                // Si l'utilisateur est connecté, changer le lien de connexion
-                echo '<a href="deconnexion.php" class="bouton">DECONNEXION</a>';
-            } else {
-                // Si l'utilisateur n'est pas connecté, afficher le lien de connexion
-                echo '<a href="connexion.php" class="bouton">CONNEXION</a>';
-            }
-            ?>
-    </header>
     <div id="inscription">
         <h2>Inscription</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <label for="username">Nom d'utilisateur:</label><br>
-            <input type="text" id="username" name="username" required><br>
+            <label for="name">Nom:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            <label for="surname">Prénom:</label><br>
+            <input type="text" id="surname" name="surname" required><br>
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="email" required><br>
+            <label for="username">Pseudo:</label><br>
+            <input type="text" id="username" name="username" required><br>
             <label for="password">Mot de passe:</label><br>
-            <input type="password" id="password" name="password" required><br><br>
+            <input type="password" id="password" name="password" required><br>
+            <label for="address">Adresse:</label><br>
+            <input type="text" id="address" name="address" required><br>
+            <label for="city">Ville:</label><br>
+            <input type="text" id="city" name="city" required><br><br>
             <input type="submit" class="bouton" value="S'inscrire">
         </form>
         <br>
