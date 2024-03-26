@@ -1,12 +1,21 @@
-<?php
 session_start();
-if (!isset($_SESSION['admin'])) {
-    header("Location: accueil.php");
+if ( !isset($_SESSION['username'])  ) {
+    header("Location: connexion.php");
     exit();
 }
 
-
-$dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');
+// Récupération du statut :
+include 'nonAccessiblePhpPages/bdd.php';
+$username = $_SESSION['username'];
+$sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
+$resultat = $conn->query($sql);
+$row = $resultat->fetch_assoc();
+$statut = $row['statut'];
+// Vérification si admin :
+if ( !($statut == 'admin') ) {
+    header("Location: accueil.php");
+    exit();
+}
 
 ?>
 
@@ -28,18 +37,19 @@ $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'To
     
     <?php
         // Menu :
-        include 'header.php';
+        include 'nonAccessiblePhpPages/header.php';
     ?>
 
     <div class="Page_Principale">
 
         <h1> Page admin : </h1>
 
-        <p> Tous les utilisateurs : </p>
-        <?php               
+        <h2> Tous les utilisateurs : </h2><br>
+        <?php    
+            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');           
             $recupUser = $dbname->query('SELECT * FROM utilisateurs');
             while($user = $recupUser->fetch()){
-                echo $user['nom_utilisateur'];
+                echo $user['pseudo'];
                 ?> <br> <?php
             }
         ?>
