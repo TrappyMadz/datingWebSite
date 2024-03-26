@@ -1,6 +1,5 @@
 <?php
 session_start();
-include 'bdd.php';
 if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
@@ -13,51 +12,47 @@ if (!isset($_SESSION['username'])) {
 	<title>Pistons & Passions</title>
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
+    <!-- Pour avoir des icons (la loupe) : -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 
 <body>
-    <header> <!-- Le menu du haut :  -->
-            <!-- le logo (renvoi sur le menu en cliquant) -->
-            <a href="accueil.php" title="Menu">
-                <img id="logoHeader" alt="logo" src="img/logo.png" width="80em">
-            </a>
-            <h2> Pistons & Passions </h1>
-        <nav class="NavMenu">
-            <a href="accueil.php">MENU</a>
-            <a href="abonnements.php">ABONNEMENTS</a>
-            <a href="profil.php">MON PROFIL</a>
-        </nav>
-        <?php
-        $username = $_SESSION['username'];
-        $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
-        $resultat = $conn->query($sql);
-        $row = $resultat->fetch_assoc();
-        $statut = $row['statut'];
-        if ($statut == 'abonne') {
-            echo '<a href="messagerie.php">
-                    <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
-                </a>';
-        }
-        ?>
-            <a href="deconnexion.php" class="bouton">DECONNEXION</a>
-    </header>
+    
+    <?php
+        // Menu :
+        include 'nonAccessiblePhpPages/header.php';
+    ?>
 
     <div class="Page_Principale">
 
-        <h1> Bienvenue sur Piston et Passions ! </h1>
+        <h1> Bienvenue sur Pistons et Passions ! </h1>
+        <br><br>
+
+        <?php 
+            echo "<h2>Heureux de vous revoir ";
+            echo $_SESSION['username'];
+            echo " !</h2>";
+        ?>
+
+
 
         <div class="menuBlock" id="DivRecherche">
             <h3> Chercher quelqu'un : </h3>
-            <div class="SearchBar">
-                <form action="#">
-                    <input type="text" placeholder="Que rechechez-vous ?" name="search">
-                    <button type="submit" class="IconeLoupe" ></button>
+            
+            <div class="ZoneSearchBar">
+                <form class="SearchBar" action="#">
+                    <input type="text" placeholder="Que recherchez-vous ?" name="search">
+                    <button type="submit" class="SearchIcon" >
+                        <i class="fa fa-search"></i>
+                    </button>
                 </form>
+            </div>
         </div>
-        </div>
+
+
 
         <div class="menuBlock" id="Recommendations">
             <h3> Recommendations : </h3>
@@ -148,7 +143,8 @@ if (!isset($_SESSION['username'])) {
              ?> 
         </div>
 
-        <div class="menuBlock" id="LastProfils">
+
+         <div class="menuBlock" id="LastProfils">
             <h3> Nos tout derniers membres : </h3>
             <div class="ZoneProfils">
                 
