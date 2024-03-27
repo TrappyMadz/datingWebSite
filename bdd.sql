@@ -1,6 +1,7 @@
+
 USE bdd;
 
-
+DROP table utilisateurs;
 CREATE TABLE utilisateurs(
     id INT AUTO_INCREMENT PRIMARY KEY,
     prenom VARCHAR(255) NOT NULL,

@@ -1,3 +1,4 @@
+<?php
 session_start();
 if ( !isset($_SESSION['username'])  ) {
     header("Location: connexion.php");
@@ -5,7 +6,7 @@ if ( !isset($_SESSION['username'])  ) {
 }
 
 // Récupération du statut :
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 $username = $_SESSION['username'];
 $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
 $resultat = $conn->query($sql);
@@ -27,6 +28,7 @@ if ( !($statut == 'admin') ) {
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/script.js"></script>
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
     <!-- Pour avoir des icons : -->
@@ -37,22 +39,33 @@ if ( !($statut == 'admin') ) {
     
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
-    <div class="Page_Principale">
+    <h1>Bienvenue sur la page d'administration : </h1>
+    <br><br>
+    <div id="adminDashboard">
+        <div id="adminItemList">
+            
+            <button class="butAdmin" onclick="dispUser();"><img src="img/user.png" alt="user"><br>Utilisateurs</button>
+            <button class="butAdmin"><img src="img/bell.png" alt="reporting"><br>Signalements</button>
+        </div>
+    </div>
+    
 
-        <h1> Page admin : </h1>
 
-        <h2> Tous les utilisateurs : </h2><br>
+
+   <div id="userList">
+        <h1> Utilisateurs : </h1><br>
         <?php    
-            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');           
+            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Madz', 'Nathan-412');           
             $recupUser = $dbname->query('SELECT * FROM utilisateurs');
             while($user = $recupUser->fetch()){
                 echo $user['pseudo'];
                 ?> <br> <?php
             }
         ?>
+        <button class="butAdmin" onclick="hideUserList();">Retour</button>
     </div>
 
 

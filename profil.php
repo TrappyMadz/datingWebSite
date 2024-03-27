@@ -6,6 +6,8 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
+
+
 $username = $_SESSION['username'];
 
 $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$username'";
