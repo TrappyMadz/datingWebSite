@@ -1,6 +1,7 @@
 <?php
+include 'bdd.php';
 session_start();
-include 'nonAccessiblePhpPages/bdd.php';
+
 if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
@@ -17,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erreur lors de la mise à jour du statut : " . $conn->error;
     }
 }
-
 ?>
 
 
@@ -33,13 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    
-    <?php
+<?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
-    ?>
-    
-
+        include 'header.php';
+?>
     <h1> Abonnez-vous et gagnez de nombreux avantages ! </h1>
     <p> Envoyez des messages à vos coup de moteur</p>
     <p> Soyez au courant des voitures qui sont passées sur votre profil</p>
