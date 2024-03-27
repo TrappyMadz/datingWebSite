@@ -6,7 +6,6 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-
 // Inclure le fichier de connexion à la base de données
 include 'bdd.php';
 
@@ -22,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "INSERT INTO messages (content, pseudo_sender, pseudo_recipient) VALUES ('$content', '$pseudo_sender', '$pseudo_recipient')";
 
-    if ($conn->query($sql) == TRUE) {
+    if ($conn->query($sql) === TRUE) {
         echo "Message envoyé !";
         // to reload the page just in case :
         header("Location: message.php");
@@ -81,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h2> Recup et affichage des messages : </h2>
                 <?php
                     
-                    $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Madz', 'Nathan-412');
+                    $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');
                     $recupMessage = $dbname->prepare('SELECT * FROM messages WHERE pseudo_sender = ? AND pseudo_recipient = ? 
                                                         OR pseudo_sender = ? AND pseudo_recipient = ?');              
                     $recupMessage->execute(array($_SESSION['username'], $pseudo_recipient, $pseudo_recipient, $_SESSION['username']));

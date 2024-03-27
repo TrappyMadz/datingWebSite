@@ -4,8 +4,6 @@ if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
 }
-
-
 ?>
 
 
@@ -40,3 +38,4 @@ if (!isset($_SESSION['username'])) {
 
 </body>
 </html>
+

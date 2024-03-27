@@ -1,20 +1,21 @@
 <?php
 include 'bdd.php';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = addslashes($_POST['name']);
-    $surname = addslashes($_POST['surname']);
-    $username = addslashes($_POST['username']);
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = addslashes($_POST['password']);
-    $address = addslashes($_POST['address']);
+    $password = $_POST['password'];
+    $address = $_POST['address'];
     $city = $_POST['city'];
-    $sexe = $_POST['sexe'];
     
+
     $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$username'";
     $resultat = $conn->query($sql);
     if ($resultat && $resultat->num_rows == 0) {
-        $sql = "INSERT INTO utilisateurs (nom, prenom, pseudo, email, mot_de_passe, adresse, ville, statut, lien, sexe) VALUES ('$name', '$surname','$username', '$email', '$password', '$address', '$city', 'utilisateur', 'https://cdn-icons-png.flaticon.com/512/20/20079.png', '$sexe')";
+        $sql = "INSERT INTO utilisateurs (nom, prenom, pseudo, email, mot_de_passe, adresse, ville, statut, lien) VALUES ('$name', '$surname','$username', '$email', '$password', '$address', '$city', 'utilisateur', 'https://cdn-icons-png.flaticon.com/512/20/20079.png')";
         if ($conn->query($sql) === TRUE) {
             echo "Inscription réussie !";
             header("Location: connexion.php");
@@ -51,14 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="email" id="email" name="email" required><br>
             <label for="username">Pseudo:</label><br>
             <input type="text" id="username" name="username" required><br>
-            <label for="genreF">Genre : </label>
-            <br />
-            <div id="sexChange">
-              <input type="radio" id="genreF" name="sexe" value="1" required />
-              <label for="genreF" class="labelGenre" id="labelF">Femme</label>
-              <input type="radio" id="genreM" name="sexe" value="2" required />
-              <label for="genreM" class="labelGenre" id="labelH">Homme</label>
-            </div>
             <label for="password">Mot de passe:</label><br>
             <input type="password" id="password" name="password" required><br>
             <label for="address">Adresse:</label><br>
