@@ -1,6 +1,7 @@
 <?php
 include 'bdd.php';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $surname = $_POST['surname'];
@@ -10,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST['address'];
     $city = $_POST['city'];
     
+
     $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$username'";
     $resultat = $conn->query($sql);
     if ($resultat && $resultat->num_rows == 0) {
