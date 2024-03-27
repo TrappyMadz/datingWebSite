@@ -58,7 +58,7 @@ if (!isset($_SESSION['username'])) {
         <div class="menuBlock" id="Recommendations">
             <h3> Recommendations : </h3>
              <?php
-            $sql = "SELECT count(*) as nbr FROM utilisateurs WHERE statut = 'abonne'";
+            $sql = "SELECT count(*) as nbr FROM utilisateurs WHERE statut = 'abonne' OR statut = 'admin'";
             $result = $conn->query($sql);         
             $row = $result->fetch_assoc();
             echo "Nombre d'abonnés : " . $row['nbr'];
@@ -74,7 +74,7 @@ if (!isset($_SESSION['username'])) {
                 for ($i= $nbrabonne -1; $i >= 0 ; $i--) { 
                     echo "<div class=caseProfils>"; 
 
-                        $sql = "SELECT lien, pseudo FROM utilisateurs WHERE statut = 'abonne' LIMIT $i, 1 ";
+                        $sql = "SELECT lien, pseudo FROM utilisateurs WHERE statut = 'abonne' OR statut='admin' LIMIT $i, 1 ";
                         $resultat = $conn->query($sql);
                         $row = $resultat->fetch_assoc();
                         $lien = $row['lien'];
@@ -82,7 +82,7 @@ if (!isset($_SESSION['username'])) {
                         echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
 
                         echo '<p>';
-                        $sql = "SELECT * FROM utilisateurs where statut = 'abonne' LIMIT $i, 1";
+                        $sql = "SELECT * FROM utilisateurs where statut = 'abonne' OR statut='admin' LIMIT $i, 1";
                         $res = $conn->query($sql);
                         $row = $res->fetch_assoc();
                         echo $row['prenom'];

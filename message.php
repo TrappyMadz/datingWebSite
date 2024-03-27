@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h2> Recup et affichage des messages : </h2>
                 <?php
                     
-                    $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');
+                    $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Madz', 'Nathan-412');
                     $recupMessage = $dbname->prepare('SELECT * FROM messages WHERE pseudo_sender = ? AND pseudo_recipient = ? 
                                                         OR pseudo_sender = ? AND pseudo_recipient = ?');              
                     $recupMessage->execute(array($_SESSION['username'], $pseudo_recipient, $pseudo_recipient, $_SESSION['username']));

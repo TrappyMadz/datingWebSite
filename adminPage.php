@@ -1,3 +1,4 @@
+<?php
 session_start();
 if ( !isset($_SESSION['username'])  ) {
     header("Location: connexion.php");
@@ -5,7 +6,7 @@ if ( !isset($_SESSION['username'])  ) {
 }
 
 // Récupération du statut :
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 $username = $_SESSION['username'];
 $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
 $resultat = $conn->query($sql);
@@ -27,6 +28,7 @@ if ( !($statut == 'admin') ) {
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/styleAdmin.css"/>
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
     <!-- Pour avoir des icons : -->
@@ -35,24 +37,51 @@ if ( !($statut == 'admin') ) {
 
 <body>
     
+    <script>
+        function dispUser() {
+            document.getElementById("userList").style.display = "flex";
+        }
+
+        function stopUser() {
+            document.getElementById("userList").style.display = "none";
+        }
+    </script>
+
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
     <div class="Page_Principale">
+        <h1> Bienvenue sur la page d'administration : </h1>
 
-        <h1> Page admin : </h1>
+        <div id="container">
+            <h3>Gestion : </h3>
+            <div id="optionList">
+                <button><img src="img/utilisateur.png" alt="Utilisateur" onclick="dispUser();"></button>
+                <button><img src="img/bell.png" alt="Signalements"</button>
+            </div>
+        </div>
 
-        <h2> Tous les utilisateurs : </h2><br>
-        <?php    
-            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');           
-            $recupUser = $dbname->query('SELECT * FROM utilisateurs');
-            while($user = $recupUser->fetch()){
-                echo $user['pseudo'];
-                ?> <br> <?php
-            }
-        ?>
+
+        <div id="userList">
+            <?php
+            // Menu :
+            include 'header.php';
+            ?>
+
+            <h2> Tous les utilisateurs : </h2><br>
+            <?php    
+                $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Madz', 'Nathan-412');           
+                $recupUser = $dbname->query('SELECT * FROM utilisateurs');
+                while($user = $recupUser->fetch()){
+                    echo $user['pseudo'];
+                    ?> <br> <?php
+                }
+            ?>
+
+            <button onclick="stopUser();">Retour</button>
+        </div>
     </div>
 
 
