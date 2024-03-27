@@ -70,11 +70,12 @@ if (!isset($_SESSION['username'])) {
             echo "<div class=ZoneProfils>";
                 for ($i= $nbrabonne -1; $i >= 0 ; $i--) { 
                     echo "<div class=caseProfils>"; 
-                        $sql = "SELECT lien FROM utilisateurs WHERE statut = 'abonne' LIMIT $i, 1 ";
+                        $sql = "SELECT lien, pseudo FROM utilisateurs WHERE statut = 'abonne' LIMIT $i, 1 ";
                         $resultat = $conn->query($sql);
                         $row = $resultat->fetch_assoc();
                         $lien = $row['lien'];
-                        echo '<img src="'.$lien.'" width="80em">';
+                        $pseudo = $row['pseudo'];
+                        echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
                         echo '<p>';
                         $sql = "SELECT * FROM utilisateurs where statut = 'abonne' LIMIT $i, 1";
                         $res = $conn->query($sql);
@@ -95,13 +96,13 @@ if (!isset($_SESSION['username'])) {
                             $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                             $resultat = $conn->query($sql);
                             $row = $resultat->fetch_assoc();
+                            $pseudo = $row['pseudo'];
                             $lien = $row['lien'];
-                            echo '<img src="'.$lien.'" width="80em">';
+                            echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
                             echo '<p>';
                             $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                             $res = $conn->query($sql);
                             $row = $res->fetch_assoc();
-                            
                             
                             echo $row['prenom'];
                             echo " ";
@@ -119,8 +120,9 @@ if (!isset($_SESSION['username'])) {
                             $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                             $resultat = $conn->query($sql);
                             $row = $resultat->fetch_assoc();
+                            $pseudo = $row['pseudo'];
                             $lien = $row['lien'];
-                            echo '<img src="'.$lien.'" width="80em">';
+                            echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
                             echo '<p>';
                             $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                             $res = $conn->query($sql);
@@ -152,8 +154,9 @@ if (!isset($_SESSION['username'])) {
                                 $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                                 $resultat = $conn->query($sql);
                                 $row = $resultat->fetch_assoc();
+                                $pseudo = $row['pseudo'];
                                 $lien = $row['lien'];
-                                echo '<img src="'.$lien.'" width="80em">';
+                                echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
                                 echo '<p>';
                                 $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                                 $res = $conn->query($sql);
@@ -177,8 +180,9 @@ if (!isset($_SESSION['username'])) {
                                $sql = "SELECT lien FROM utilisateurs LIMIT $i, 1 ";
                                $resultat = $conn->query($sql);
                                $row = $resultat->fetch_assoc();
+                               $pseudo = $row['pseudo'];
                                $lien = $row['lien'];
-                               echo '<img src="'.$lien.'" width="80em">';
+                               echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
                                echo '<p>';
                                $sql = "SELECT * FROM utilisateurs LIMIT $i, 1";
                                $res = $conn->query($sql);
@@ -199,9 +203,6 @@ if (!isset($_SESSION['username'])) {
 
 
                     ?>
-                    <!-- <img src="./img/sally.png" alt="Profil 1">
-                    <p>Casseandre EEHEEH</p>
-                    <p>localisation japon</p>                             -->
                 
             </div>
         </div>
