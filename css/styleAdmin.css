@@ -68,3 +68,18 @@ h3 {
   width: 10%;
   align-self: center;
 }
+
+.liste {
+  text-decoration: none;
+  color: #7c0a38;
+  padding: 12px 24px;
+  transition: 0.6s ease;
+}
+
+.liste:hover {
+  transition: 0.3s ease;
+  opacity: 0.75;
+  background-color: #e01c67;
+  cursor: pointer;
+  color: #ffffff;
+}

@@ -83,7 +83,7 @@ if ( !($statut == 'admin') ) {
                     $resultat = $conn->query($sql);
                     $row = $resultat->fetch_assoc();
                     $pseudo = $row['pseudo'];
-                    echo '<a href="showprofil.php?pseudo='.$pseudo.'">'.$pseudo.'</a>';
+                    echo '<a class="liste" href="showprofil.php?pseudo='.$pseudo.'">'.$pseudo.'</a>';
                     
                }
             ?> 
