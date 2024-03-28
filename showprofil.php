@@ -58,7 +58,7 @@ if (isset($_GET['pseudo'])) {
                 <div id="container">
                     <h3>Gestion : </h3>
                     <div id="optionList">
-                        <button><a class="butLien" href=""><img id="boutMessAdmin" src="img/envelope.png" alt="Messages"></button>
+                        <button><a class="butLien" href=""><img Class="boutMessAdmin" src="img/envelope.png" alt="Messages"></button>
                         <button><a class="butLien" href="profil.php?pseudo='.$usernameAdmin.'"><img src="img/modifProfile.png" alt="Modifier Profil"></button>
                     </div>
                 </div>';

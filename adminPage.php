@@ -45,6 +45,10 @@ if ( !($statut == 'admin') ) {
         function stopUser() {
             document.getElementById("userList").style.display = "none";
         }
+
+        function dispUserMess() {
+            document.getElementById("adminMsgUser").style.display = "flex";
+        }
     </script>
 
     <?php
@@ -58,8 +62,9 @@ if ( !($statut == 'admin') ) {
         <div id="container">
             <h3>Gestion : </h3>
             <div id="optionList">
-                <button><img src="img/utilisateur.png" alt="Utilisateur" onclick="dispUser();"></button>
+                <button onclick="dispUser();"><img src="img/utilisateur.png" alt="Utilisateur" ></button>
                 <button><img src="img/bell.png" alt="Signalements"</button>
+                <button onclick="dispUserMess();"><img Class="boutMessAdmin" src="img/envelope.png" alt="Messages"></button>
             </div>
         </div>
 
@@ -90,6 +95,30 @@ if ( !($statut == 'admin') ) {
             <br>
 
             <button onclick="stopUser();">Retour</button>
+        </div>
+
+        <div id="adminMsgUser">
+            <?php
+            include 'header.php';
+            ?>
+            <h2>Choississez un utilisateur : </h2>
+
+            <?php    
+
+                $sql = "SELECT count(*) as nbrtot FROM utilisateurs";
+                $result = $conn->query($sql);         
+                $row = $result->fetch_assoc();
+                $nbrtot = $row['nbrtot'];
+
+                for ($i= $nbrtot  -1; $i >= 0 ; $i--) { 
+                    $sql = "SELECT pseudo FROM utilisateurs LIMIT $i , 1";
+                    $resultat = $conn->query($sql);
+                    $row = $resultat->fetch_assoc();
+                    $pseudo = $row['pseudo'];
+                    echo '<a class="liste" href="adminPageMessagerie.php?pseudo='.$pseudo.'">'.$pseudo.'</a>';
+                }
+            ?> 
+
         </div>
     </div>
 
