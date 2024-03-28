@@ -98,7 +98,7 @@ if (!isset($_SESSION['username'])) {
                 if ( ($nbrabonne < 5 ) && ( $nbrtot + $nbrabonne >= 5  ) ) {
                     for ($i= 4  - $nbrabonne; $i >= 0 ; $i--) { 
                         echo "<div class=caseProfils>"; 
-                            $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
+                            $sql = "SELECT lien,pseudo FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                             $resultat = $conn->query($sql);
                             $row = $resultat->fetch_assoc();
 
@@ -125,7 +125,7 @@ if (!isset($_SESSION['username'])) {
                 if (($nbrabonne < 5 ) && ( $nbrtot + $nbrabonne < 5  )){
                     for ($i= $nbrtot  -1; $i >= $nbrabonne ; $i--) { 
                         echo "<div class=caseProfils>"; 
-                            $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
+                            $sql = "SELECT lien,pseudo FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                             $resultat = $conn->query($sql);
                             $row = $resultat->fetch_assoc();
 
@@ -162,7 +162,7 @@ if (!isset($_SESSION['username'])) {
                     if (($nbrabonne < 5 ) && ( $nbrtot + $nbrabonne < 5  )){
                         for ($i= $nbrtot -1 ; $i >= $nbrabonne ; $i--) { 
                             echo "<div class=caseProfils>"; 
-                                $sql = "SELECT lien FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
+                                $sql = "SELECT lien,pseudo FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                                 $resultat = $conn->query($sql);
                                 $row = $resultat->fetch_assoc();
 
@@ -190,7 +190,7 @@ if (!isset($_SESSION['username'])) {
                             echo "<div class=caseProfils>";
 
                                $username = $_SESSION['username'];
-                               $sql = "SELECT lien FROM utilisateurs LIMIT $i, 1 ";
+                               $sql = "SELECT lien,pseudo FROM utilisateurs LIMIT $i, 1 ";
                                $resultat = $conn->query($sql);
                                $row = $resultat->fetch_assoc();
 

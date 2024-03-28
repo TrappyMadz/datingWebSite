@@ -72,13 +72,22 @@ if ( !($statut == 'admin') ) {
 
             <h2> Tous les utilisateurs : </h2><br>
             <?php    
-                $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Madz', 'Nathan-412');           
-                $recupUser = $dbname->query('SELECT * FROM utilisateurs');
-                while($user = $recupUser->fetch()){
-                    echo $user['pseudo'];
-                    ?> <br> <?php
-                }
-            ?>
+
+                $sql = "SELECT count(*) as nbrtot FROM utilisateurs";
+                $result = $conn->query($sql);         
+                $row = $result->fetch_assoc();
+                $nbrtot = $row['nbrtot'];
+
+                for ($i= $nbrtot  -1; $i >= 0 ; $i--) { 
+                    $sql = "SELECT pseudo FROM utilisateurs LIMIT $i , 1";
+                    $resultat = $conn->query($sql);
+                    $row = $resultat->fetch_assoc();
+                    $pseudo = $row['pseudo'];
+                    echo '<a href="showprofil.php?pseudo='.$pseudo.'">'.$pseudo.'</a>';
+                    
+               }
+            ?> 
+            <br>
 
             <button onclick="stopUser();">Retour</button>
         </div>
