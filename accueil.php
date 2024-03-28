@@ -15,16 +15,13 @@ if (!isset($_SESSION['username'])) {
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
-
-    <!-- Pour avoir des icons : -->
-
+    <!-- Pour avoir des icons (la loupe) : -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 
 <body>
     
-
-<?php
+    <?php
         // Menu :
         include 'header.php';
 ?>
@@ -55,6 +52,8 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
 
+
+
         <div class="menuBlock" id="Recommendations">
             <h3> Recommendations : </h3>
              <?php
@@ -80,7 +79,6 @@ if (!isset($_SESSION['username'])) {
                         $lien = $row['lien'];
                         $pseudo = $row['pseudo'];
                         echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
-
                         echo '<p>';
                         $sql = "SELECT * FROM utilisateurs where statut = 'abonne' OR statut='admin' LIMIT $i, 1";
                         $res = $conn->query($sql);
@@ -101,17 +99,14 @@ if (!isset($_SESSION['username'])) {
                             $sql = "SELECT lien,pseudo FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                             $resultat = $conn->query($sql);
                             $row = $resultat->fetch_assoc();
-
                             $pseudo = $row['pseudo'];
                             $lien = $row['lien'];
                             echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
-
                             echo '<p>';
                             $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                             $res = $conn->query($sql);
                             $row = $res->fetch_assoc();
                             
-
                             echo $row['prenom'];
                             echo " ";
                             echo $row['nom'];
@@ -128,11 +123,9 @@ if (!isset($_SESSION['username'])) {
                             $sql = "SELECT lien,pseudo FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                             $resultat = $conn->query($sql);
                             $row = $resultat->fetch_assoc();
-
                             $pseudo = $row['pseudo'];
                             $lien = $row['lien'];
                             echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
-
                             echo '<p>';
                             $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                             $res = $conn->query($sql);
@@ -153,8 +146,7 @@ if (!isset($_SESSION['username'])) {
              ?> 
         </div>
 
-
-         <div class="menuBlock" id="LastProfils">
+        <div class="menuBlock" id="LastProfils">
             <h3> Nos tout derniers membres : </h3>
             <div class="ZoneProfils">
                 
@@ -165,11 +157,9 @@ if (!isset($_SESSION['username'])) {
                                 $sql = "SELECT lien,pseudo FROM utilisateurs WHERE statut = 'utilisateur' LIMIT $i , 1";
                                 $resultat = $conn->query($sql);
                                 $row = $resultat->fetch_assoc();
-
                                 $pseudo = $row['pseudo'];
                                 $lien = $row['lien'];
                                 echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
-
                                 echo '<p>';
                                 $sql = "SELECT * FROM utilisateurs where statut = 'utilisateur' LIMIT $i, 1";
                                 $res = $conn->query($sql);
@@ -193,11 +183,9 @@ if (!isset($_SESSION['username'])) {
                                $sql = "SELECT lien,pseudo FROM utilisateurs LIMIT $i, 1 ";
                                $resultat = $conn->query($sql);
                                $row = $resultat->fetch_assoc();
-
                                $pseudo = $row['pseudo'];
                                $lien = $row['lien'];
                                echo '<a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a>';
-
                                echo '<p>';
                                $sql = "SELECT * FROM utilisateurs LIMIT $i, 1";
                                $res = $conn->query($sql);
@@ -218,7 +206,6 @@ if (!isset($_SESSION['username'])) {
 
 
                     ?>
-
                 
             </div>
         </div>
