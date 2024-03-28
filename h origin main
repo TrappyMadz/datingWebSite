@@ -1,0 +1,43 @@
+[33mcommit c5801e42125095244b6719ec44399bcf2d5520df[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Boudi <robleslisa@cy-tech.fr>
+Date:   Sun Mar 24 02:06:44 2024 +0100
+
+    essai de merge je crois ?
+
+[33mcommit 972c9295e46f6bf49b8881a5e0f973bffdeed733[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Charrier Simon <150603972+TrappyMadz@users.noreply.github.com>
+Date:   Tue Mar 19 08:24:31 2024 +0100
+
+    Delete img/img.png
+
+[33mcommit 9bbe25c90ff2653e611e03b9ac7636c06da929cf[m
+Author: Voidhi <163297654+Voidhi@users.noreply.github.com>
+Date:   Tue Mar 19 08:24:04 2024 +0100
+
+    Delete index.html
+
+[33mcommit c9a2c4f8651fe52c2b55c82faf6dc404fb611c5b[m
+Author: Voidhi <163297654+Voidhi@users.noreply.github.com>
+Date:   Tue Mar 19 08:22:30 2024 +0100
+
+    Add files via upload
+    
+    quelques images (logo icone etc)
+
+[33mcommit bf0be89440cb13d50d7712aee48b8aad57112f0c[m
+Author: Charrier Simon <150603972+TrappyMadz@users.noreply.github.com>
+Date:   Tue Mar 19 08:21:38 2024 +0100
+
+    Create img folder
+
+[33mcommit 0603828feb3c045145dbb36f9cbe930f4ed750da[m
+Author: Voidhi <163297654+Voidhi@users.noreply.github.com>
+Date:   Tue Mar 19 08:18:22 2024 +0100
+
+    css de la page menu, base
+
+[33mcommit cff34f0690f961e5d82a9413809fa284798f6eb7[m
+Author: TrappyMadz <simon.charrier42@outlook.fr>
+Date:   Wed Mar 13 12:25:28 2024 +0100
+
+    commit initiale
