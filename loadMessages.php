@@ -6,7 +6,7 @@
     }
     
     // Inclure le fichier de connexion à la base de données
-    include 'nonAccessiblePhpPages/bdd.php';
+    include 'bdd.php';
 
     // Rerécupère le pseudo du destinataire depuis l'URL
     if (isset($_GET['pseudo'])) {

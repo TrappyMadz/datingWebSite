@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         echo "Abonnement réussi !";
     } else {
-        echo "Erreur lors de la mise à jour du statut : " . $conn->error;
+        echo "Erreur lors de la mise à jour du statut : " . $conn->$error;
     }
 }
 
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
     
 

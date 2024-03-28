@@ -1,5 +1,5 @@
 <?php
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];

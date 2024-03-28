@@ -24,7 +24,7 @@ if (!isset($_SESSION['username'])) {
     
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
     <div class="Page_Principale">
@@ -34,7 +34,7 @@ if (!isset($_SESSION['username'])) {
 
         <?php
 
-            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');           
+            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Madz', 'Nathan-412');           
             $recupUser = $dbname->query('SELECT * FROM utilisateurs');
             while($user = $recupUser->fetch()){
                 $pseudo = $user['pseudo'];

@@ -6,8 +6,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Inclure le fichier de connexion à la base de données
-include 'nonAccessiblePhpPages/bdd.php';
-
+include 'bdd.php';
 
 $pseudo_sender = $_SESSION['username'];
 $pseudo_recipient = '';
@@ -70,7 +69,7 @@ if ( ($_SERVER["REQUEST_METHOD"] == "POST") && !(empty($_POST['message']))) {
     
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
     <div class="Page_Principale">

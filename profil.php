@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 
 
 if (!isset($_SESSION['username'])) {
@@ -8,7 +8,14 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$username = $_SESSION['username'];
+if (isset($_GET['pseudo'])) {
+    $username = $_GET['pseudo'];
+    
+}
+else {
+    $username = $_SESSION['username'];
+}
+
 
 $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$username'";
 $resultat = $conn->query($sql);
@@ -21,7 +28,7 @@ $password2 = $row['mot_de_passe'];
 $city = $row['ville'];
 $url = $row['lien'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["userValid"]) {
 
     $name = $_POST['name'];
     $surname = $_POST['surname'];
@@ -37,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row_check_username = $result_check_username->fetch_assoc();
     $count = $row_check_username['count'];
 
+
+
     if ($count > 0 && $username2 !== $username) {
         echo "Le pseudo est déjà pris, veuillez en choisir un autre.";
     } else {
@@ -47,6 +56,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $_SESSION['username'] = $username2;
             
+            echo "Mise à jour des informations réussie !";
+        } else {
+            echo "Erreur lors de la mise à jour des informations : " . $conn->error;
+        }
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["adminChange"]) {
+    $surname = $_POST['surname'];
+    $username = $_GET['username'];
+    $username2 = $_POST['username'];
+    $email = $_POST['email'];
+    $password2 = $_POST['password2'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $url = $_POST['url'];
+
+    $sql_check_username = "SELECT COUNT(*) AS count FROM utilisateurs WHERE pseudo = '$username2'";
+    $result_check_username = $conn->query($sql_check_username);
+    $row_check_username = $result_check_username->fetch_assoc();
+    $count = $row_check_username['count'];
+
+
+    $username = $_GET['username'];
+    echo ''.$username.'';
+    if ($count > 0 && $username2 !== $username) {
+        echo "Le pseudo est déjà pris, veuillez en choisir un autre. '.$username.'";
+    } else {
+
+        $sql = "UPDATE utilisateurs SET pseudo = '$username2', nom = '$name', prenom = '$surname', email = '$email', adresse = '$address', ville = '$city', lien = '$url', mot_de_passe = '$password2' WHERE pseudo = '$username'";
+        
+        if ($conn->query($sql) === TRUE) {
             echo "Mise à jour des informations réussie !";
         } else {
             echo "Erreur lors de la mise à jour des informations : " . $conn->error;
@@ -86,12 +127,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
+        if (isset($_GET['pseudo'])) {
+            $username = $_GET['pseudo'];
+            
+        }
+        else {
+            $username = $_SESSION['username'];
+        }
     ?>
 
     <div class="Page_Principale">
 
         <?php
+       
             $sql = "SELECT lien FROM utilisateurs WHERE pseudo = '$username'";
             $resultat = $conn->query($sql);
             $row = $resultat->fetch_assoc();
@@ -127,7 +176,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" id="password2" name="password2" value="<?php echo $password2; ?>" required>
             <button type="button" id="toggleButton" onclick="togglePassword()"><img src="img/oeil.png" width=15em></button>
 
-            <input type="submit" class="btn" value="Valider les changements">
+            <input type="submit" class="btn" value="Valider les changements" name="userValid">
+            <input type="submit" class="btn" value="AdminTest" name="adminChange">
 
         </form>
 

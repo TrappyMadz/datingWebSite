@@ -83,3 +83,11 @@ h3 {
   cursor: pointer;
   color: #ffffff;
 }
+
+#finProfile {
+  margin-bottom: 5%;
+}
+
+#boutMessAdmin {
+  filter: grayscale(100) brightness(100);
+}

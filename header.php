@@ -35,12 +35,12 @@
             $resultat = $conn->query($sql);
             $row = $resultat->fetch_assoc();
             $statut = $row['statut'];
-            if ($statut == 'abonne') {
+            if ($statut == 'abonne' || $statut == 'admin') {
                 echo '<a href="messagerie.php">
                         <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
                     </a>';
             }
         ?>
 
-        <a href="nonAccessiblePhpPages/deconnexion.php" class="bouton">DÉCONNEXION</a>
+        <a href="deconnexion.php" class="bouton">DÉCONNEXION</a>
 </header>
