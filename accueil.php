@@ -46,7 +46,7 @@ if (!isset($_SESSION['username'])) {
             <h3> Chercher quelqu'un : </h3>
             
             <div class="ZoneSearchBar">
-                <form class="SearchBar" action="#">
+                <form class = "SearchBar" action = "rechercheprofils.php" method="post">
                     <input type="text" placeholder="Que recherchez-vous ?" name="search">
                     <button type="submit" class="SearchIcon" >
                         <i class="fa fa-search"></i>
