@@ -66,32 +66,20 @@ if ( ($_SERVER["REQUEST_METHOD"] == "POST") && !(empty($_POST['message']))) {
 </head>
 
 <body>
-    
-    <?php
-        // Menu :
-        include 'header.php';
-    ?>
 
     <div class="Page_Principale">
 
-        <?php 
-            echo "<h1>Messagerie entre $pseudo_sender et $pseudo_recipient : </h1>";
+        <div id='titreMess'>
+            <?php 
+            include 'header.php';
+                echo "<h1>Messagerie entre $pseudo_sender et $pseudo_recipient : </h1>";
         
-        ?>
+            ?>
+        </div>
 
         <div class="menuBlock" id="mess">
 
             <br><br>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-                <label for="message">Message :</label><br><br>
-                <textarea name="message" class="mess_zone" required></textarea>
-                <br><br>                
-                <!-- Ajout d'un champ caché pour le pseudo du destinataire -->
-                <input type="hidden" name="pseudo_recipient" value="<?php echo htmlspecialchars($pseudo_recipient); ?>">
-                <input type="submit" class="bouton" value="Envoyer">
-            </form>
-
-            <br><br><br>
 
             <h2> Recup et affichage des messages : </h2>
             <section id="chat">
@@ -101,28 +89,52 @@ if ( ($_SERVER["REQUEST_METHOD"] == "POST") && !(empty($_POST['message']))) {
                     $stmt->bind_param("ssss", $_SESSION['username'], $pseudo_recipient, $pseudo_recipient, $_SESSION['username']);
                     $stmt->execute();
                     $result = $stmt->get_result();
+                    $messageNb = 0;
                     while ($message = $result->fetch_assoc()) {
                         if ($message['pseudo_recipient'] == $_SESSION['username']) {
-                            // Messages du destinataire :
+                            ?>
+                            <div class="destMSG">
+
+                            <?php
                             echo "<p class='mess_recipient'>" . $message['content'] . "</p>";
+                            echo "<a href='signaler.php?aSigna=".$message['id']."' class='optionMessUser'><img class='reportImg' src='img/Report.png'></a>
+                            </div>";
                         } else {
                             // Messages de l'expéditeur :
                             echo "<p class='mess_sender'>" . $message['content'] . "</p>";
+                            ?>
+                            <?php
                         }
                     }
+
+                    
                 ?>
             </section>
+            <br><br><br>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                <label for="message">Message :</label><br><br>
+                <textarea name="message" class="mess_zone" required></textarea>
+                <br><br>                
+                <!-- Ajout d'un champ caché pour le pseudo du destinataire -->
+                <input type="hidden" name="pseudo_recipient" value="<?php echo htmlspecialchars($pseudo_recipient); ?>">
+                <input type="submit" class="bouton" value="Envoyer">
+            </form>
                     
 
 
             <!-- Instantanéité : -->
             <script>
                 /* reload toutes les 1s la section id="chat" */
-                setInterval(function() {
+                setInterval(timer,1000);
+                function timer(){
                     /* garde l'info du $pseudo_recipient dans le loadMessages.php */
                     $('#chat').load('loadMessages.php?pseudo=<?php echo urlencode($pseudo_recipient); ?>');
-                }, 1000);
+                }
 
+                /* chargement de la page en bas (derniers messages) */
+                window.scroll(0, document.documentElement.scrollHeight);
+
+            
             </script>
 
 

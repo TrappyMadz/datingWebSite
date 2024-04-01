@@ -38,7 +38,7 @@ button:hover {
   min-width: 300px;
 }
 
-h3 {
+#titreGest {
   border-bottom: 2px solid #7c0a38;
   padding-bottom: 4%;
 }
@@ -47,10 +47,13 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  align-items: space-evenly;
 }
 
 #userList,
-#adminMsgUser {
+#adminMsgUser,
+#suprConfirm,
+#signal {
   top: 0;
   left: 0;
   z-index: 99;
@@ -60,10 +63,13 @@ h3 {
   height: 100%;
   background-color: #ffffff;
   display: none;
+  align-content: center;
 }
 
-#userList button {
+#userList button,
+#signal button {
   width: 10%;
+  height: auto;
   align-self: center;
 }
 
@@ -72,6 +78,8 @@ h3 {
   color: #7c0a38;
   padding: 12px 24px;
   transition: 0.6s ease;
+  width: 100%;
+  align-self: center;
 }
 
 .liste:hover {
@@ -90,7 +98,39 @@ h3 {
   filter: grayscale(100) brightness(100);
 }
 
-#optionList .boutMessAdmin {
-  min-height: 128px;
-  min-width: 128px;
+button a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+button img {
+  width: 64px;
+  height: 64px;
+}
+
+#suprConfirm button {
+  width: 10%;
+  align-self: center;
+}
+
+.validationMsg {
+  font-size: 4em;
+}
+
+.messSignaler {
+  text-align: center;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #ffcccc;
+  width: 10%;
+  align-self: center;
+}
+
+#signal button {
+  height: 50px;
+}
+.buttonsSigna {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

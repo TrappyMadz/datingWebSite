@@ -20,9 +20,11 @@ if ( !($statut == 'admin') ) {
 
 // Inclure le fichier de connexion à la base de données
 include 'bdd.php';
-
-$pseudo_sender = $_GET['pseudo1'];
-$pseudo_recipient = '';
+if (isset($_GET['pseudo1'])) {
+    $pseudo_sender = $_GET['pseudo1'];
+    $pseudo_recipient = '';
+}
+    
 
 //Récupère à qui on envoit le message :
 if (isset($_GET['pseudo2'])) {
@@ -44,6 +46,7 @@ if (isset($_GET['pseudo2'])) {
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/styleAdmin.css" />
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
     <!-- Pour avoir des icons : -->
@@ -54,23 +57,46 @@ if (isset($_GET['pseudo2'])) {
 
 <body>
     
-    <?php
-        // Menu :
-        include 'header.php';
-    ?>
 
     <div class="Page_Principale">
 
+        <div id="titreMess">
         <?php 
+        // Menu :
+        include 'header.php';
             echo "<h1>Messagerie entre $pseudo_sender et $pseudo_recipient : </h1>";
         
         ?>
-
+        </div>
         <div class="menuBlock" id="mess">
 
             <h2> Recup et affichage des messages : </h2>
             <section id="chat">
                 <?php
+
+                    $stmt= $conn->prepare('SELECT COUNT(*) FROM messages WHERE (pseudo_sender = ? AND pseudo_recipient = ?) OR (pseudo_sender = ? AND pseudo_recipient =?)');
+                    
+
+                    // Lier les valeurs aux paramètres
+                    $stmt-> bind_param('ssss', $pseudo_sender, $pseudo_recipient, $pseudo_recipient, $pseudo_sender);
+
+                    //execution
+                    $stmt->execute();
+
+                    // Récuperation
+                    $stmt->bind_result($count);
+                    $stmt->fetch();
+
+                    // Libérer les résultats
+                    $stmt->free_result();
+
+                    // Verif
+                    if ($count == 0) {
+                        echo '<p>Aucun message</p>';
+                    }
+
+                    $stmt->close();
+
                     // Utiliser des requêtes préparées pour éviter les injections SQL
                     $stmt = $conn->prepare('SELECT * FROM messages WHERE (pseudo_sender = ? AND pseudo_recipient = ?) OR (pseudo_sender = ? AND pseudo_recipient = ?)');
                     $stmt->bind_param("ssss", $pseudo_sender, $pseudo_recipient, $pseudo_recipient, $pseudo_sender);
@@ -87,22 +113,13 @@ if (isset($_GET['pseudo2'])) {
                     }
                 ?>
             </section>
-                    
 
+            <button><a class="butLien" href="adminPage.php">Retour</button>
 
-            <!-- Instantanéité : -->
             <script>
-                /* reload toutes les 1s la section id="chat" */
-                setInterval(function() {
-                    /* garde l'info du $pseudo_recipient dans le loadMessages.php */
-                    $('#chat').load('adminLoadMessages.php?pseudo=<?php echo urlencode($pseudo_recipient); ?>&pseudo2=<?php echo urlencode($pseudo_sender); ?>');
-                }, 1000);
-
+                /* chargement de la page en bas (derniers messages) */
+                window.scroll(0, document.documentElement.scrollHeight);
             </script>
-
-
-
-
         </div>
     </div>
 </body>

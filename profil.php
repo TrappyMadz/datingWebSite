@@ -9,6 +9,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 if (isset($_GET['pseudo'])) {
+    $usernameSave = $_SESSION['username'];
     $username = $_GET['pseudo'];
     
 }
@@ -65,7 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["userValid"]) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["adminChange"]) {
     $surname = $_POST['surname'];
-    $username = $_GET['username'];
     $username2 = $_POST['username'];
     $email = $_POST['email'];
     $password2 = $_POST['password2'];
@@ -79,8 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["adminChange"]) {
     $count = $row_check_username['count'];
 
 
-    $username = $_GET['username'];
-    echo ''.$username.'';
     if ($count > 0 && $username2 !== $username) {
         echo "Le pseudo est déjà pris, veuillez en choisir un autre. '.$username.'";
     } else {
@@ -129,6 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["adminChange"]) {
         // Menu :
         include 'header.php';
         if (isset($_GET['pseudo'])) {
+            $usernameSave = $_SESSION['username'];
             $username = $_GET['pseudo'];
             
         }
@@ -146,10 +145,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["adminChange"]) {
             $row = $resultat->fetch_assoc();
             $url = $row['lien'];
             echo '<img src="'.$url.'" width="200em">';
+
+            $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$usernameSave'";
+            $resultat = $conn->query($sql);
+            $row = $resultat->fetch_assoc();
+            $statut = $row['statut'];
         ?>
         <br><br><br>
 
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="formprofil">
+        <form action="<?php echo htmlspecialchars($_SERVER["profil.php?pseudo='.$username.'"]); ?>" method="post" id="formprofil">
             <br><br>
             <label for="url">URL image</label>
             <input type="text" id="url" name="url" value="<?php echo $url; ?>" required>
@@ -176,8 +180,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["adminChange"]) {
             <input type="password" id="password2" name="password2" value="<?php echo $password2; ?>" required>
             <button type="button" id="toggleButton" onclick="togglePassword()"><img src="img/oeil.png" width=15em></button>
 
-            <input type="submit" class="btn" value="Valider les changements" name="userValid">
-            <input type="submit" class="btn" value="AdminTest" name="adminChange">
+            <?php 
+            if ($statut == 'admin') {
+                echo ' <input type="submit" class="btn" value="AdminTest" name="adminChange">';
+            }
+            else {
+                echo'<input type="submit" class="btn" value="Valider les changements" name="userValid">';
+            }
+            ?>
+
+           
 
         </form>
 

@@ -36,7 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
 </head>
-<body>
+<body class="magicpattern">
+    <div id="logoBienv">
+    <h1>Bienvenue sur Piston et Passion</h1>
+        <img src="img/logo.png" alt="logo">
+        
+    </div>
+
     <div id="Connexion">
         <h2>Connexion</h2>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">

@@ -44,6 +44,16 @@ if (isset($_GET['pseudo'])) {
         include 'header.php';
     ?>
 
+    <script>
+        function dispSupr() {
+            document.getElementById('suprConfirm').style.display="flex";
+        }
+
+        function stopDispSupr() {
+            document.getElementById('suprConfirm').style.display="none";
+        }
+    </script>
+
     <div class="Page_Principale">
 
         <?php
@@ -56,12 +66,33 @@ if (isset($_GET['pseudo'])) {
                 echo 
                 '
                 <div id="container">
-                    <h3>Gestion : </h3>
+                    <h3 id="titreGest">Gestion : </h3>
                     <div id="optionList">
-                        <button><a class="butLien" href=""><img Class="boutMessAdmin" src="img/envelope.png" alt="Messages"></button>
-                        <button><a class="butLien" href="profil.php?pseudo='.$usernameAdmin.'"><img src="img/modifProfile.png" alt="Modifier Profil"></button>
+                        <button><a class="butLien" href="adminPageMessagerie.php?pseudo='.$usernameAdmin.'"><img Class="boutMessAdmin" src="img/envelope.png" alt="Messages"></a></button>
+                        <button><a class="butLien" href="profil.php?pseudo='.$usernameAdmin.'"><img src="img/modifProfile.png" alt="Modifier Profil"></a></button>
+                        <button onclick="dispSupr();"><img src="img/supprimer.png" alt="Suppression"></button>
                     </div>
                 </div>';
+
+                ?>
+
+                <div id="suprConfirm">
+                    <?php
+                        include 'header.php'
+                    ?>
+
+                    <p>
+                        Voulez-vous vraiment supprimer cet utilisateur ?<br>
+                        (Cette action est irréversible !)
+                    </p>
+
+                    <?php
+                    echo '<button><a class="butLien" href="suprUser.php?pseudo='.$usernameAdmin.'">Oui</a></button>'
+                    ?>
+                    <button onclick="stopDispSupr();">Non</button>
+                </div>
+
+                <?php
             }
         ?>
         <br><br><br>
