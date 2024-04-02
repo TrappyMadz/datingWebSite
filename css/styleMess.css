@@ -177,23 +177,25 @@ header{
     position: absolute;
 }
 
-#proposition {
-    display: block;
-    position:absolute;
-    width: 28%;
-}
-
-.recherches{
-    display: block; /* Affiche les liens comme des blocs */
-    margin-bottom: 1px;
-    background-color: lightgrey;
-    padding:5px;
-    border-radius: 5px;
+button {
+    color: #ffffff;
+    background-color: #b9254a;
+    border: none;
+    padding: 12px 24px;
+    line-height: 1;
+    border-radius: 10px;
+    /*bord arrondis*/
+    text-align: center;
     text-decoration: none;
-    color: black;
-}
-
-.recherches:hover{
-    background-color: #939191;
-}
-
+    display: inline-block;
+    font-size: 15px;
+    transition: 0.6s ease;
+    margin: 5px;
+  }
+  
+  button:hover {
+    transition: 0.3s ease;
+    opacity: 0.75;
+    background-color: #e01c67;
+    cursor: pointer;
+  }

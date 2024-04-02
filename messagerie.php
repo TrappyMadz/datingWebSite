@@ -13,7 +13,7 @@ if (!isset($_SESSION['username'])) {
 	<title>Pistons & Passions</title>
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/styleMess.css" />
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
     <!-- Pour avoir des icons : -->
@@ -30,17 +30,21 @@ if (!isset($_SESSION['username'])) {
     <div class="Page_Principale">
 
         <h1> Messagerie : </h1>
-        <h2> (Là ya tous les utilisateirs de la bdd ; labda, abonnés et admin) </h2>
 
         <?php
+            $query = "SELECT * FROM utilisateurs";
+            $result = $conn->query($query);
 
-            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'test', 'Motdepassechiant0*');           
-            $recupUser = $dbname->query('SELECT * FROM utilisateurs');
-            while($user = $recupUser->fetch()){
-                $pseudo = $user['pseudo'];
-                echo '<a href="message.php?pseudo='.$pseudo.'"> Messagerie avec '.$pseudo.' </a><br>';
-             
+            if ($result && $result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $pseudo = $row['pseudo'];
+                    echo '<a href="message.php?pseudo='.$pseudo.'"><button> Messagerie avec '.$pseudo.' </button></a><br>';
+                }
+            } else {
+                echo "Il n'y a aucun utilisateur disponible pour la messagerie.";
             }
+
+            $conn->close();
         ?>
 
     </div>

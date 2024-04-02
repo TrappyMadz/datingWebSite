@@ -1,3 +1,4 @@
+
 <header> <!-- Le menu du haut :  -->
 
         <!-- Brand icon of our website : -->
@@ -9,18 +10,32 @@
 
         <nav class="NavMenu">
             <a href="accueil.php">MENU</a>
-            <a href="abonnements.php">ABONNEMENTS</a>
+
+            <?php
+                include 'nonAccessiblePhpPages/bdd.php';
+                $username = $_SESSION['username'];
+                $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
+                $resultat = $conn->query($sql);
+                $row = $resultat->fetch_assoc();
+                $statut = $row['statut'];
+                if ($statut == 'admin') {
+                    echo '<a href="adminPage.php">ADMINISTRATION</a>';
+                }
+                else {
+                    echo '<a href="abonnements.php">ABONNEMENTS</a>';
+                }
+
+                ?> 
             <a href="profil.php">MON PROFIL</a>
         </nav>
 
         <?php
-            include 'bdd.php';
             $username = $_SESSION['username'];
             $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
             $resultat = $conn->query($sql);
             $row = $resultat->fetch_assoc();
             $statut = $row['statut'];
-            if ($statut == 'abonne') {
+            if ($statut == 'abonne' || $statut == 'admin') {
                 echo '<a href="messagerie.php">
                         <img id="logoMess" alt="Messagerie" src="img/envelope.png" width="45em">
                     </a>';

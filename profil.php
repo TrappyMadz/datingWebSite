@@ -7,7 +7,42 @@ if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
 }
+?>
 
+
+
+<script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("password2");
+            var toggleButton = document.getElementById("toggleButton");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+</script>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pistons & Passions</title>
+	<!-- Pour l'icone de l'onglet : -->
+	<link rel="shortcut icon" href="img/logo.png" />
+	<link rel="stylesheet" type="text/css" href="css/stylePro.css" />
+	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
+	<meta charset="utf-8">
+</head>
+
+<body>
+    <?php
+        // Menu :
+        include 'nonAccessiblePhpPages/header.php';
+    ?>
+    <?php
 $username = $_SESSION['username'];
 
 $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$username'";
@@ -57,40 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
-
-<script>
-        function togglePassword() {
-            var passwordInput = document.getElementById("password2");
-            var toggleButton = document.getElementById("toggleButton");
-
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-            } else {
-                passwordInput.type = "password";
-            }
-        }
-    </script>
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Pistons & Passions</title>
-	<!-- Pour l'icone de l'onglet : -->
-	<link rel="shortcut icon" href="img/logo.png" />
-	<link rel="stylesheet" type="text/css" href="css/stylePro.css" />
-	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
-	<meta charset="utf-8">
-</head>
-
-<body>
-    <?php
-        // Menu :
-        include 'nonAccessiblePhpPages/header.php';
-    ?>
-
     <div class="Page_Principale">
 
     <?php
@@ -99,9 +100,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo '<ul class="user-list">';
         $query = "SELECT liste_id FROM vus WHERE id = '$id'";
         $result = $conn->query($query);
+        $users_found = false;
 
         if ($result) {
-
             while ($row = $result->fetch_assoc()) {
                 $liste_id = $row['liste_id'];
                 $liste_id_array = explode(',', $liste_id);
@@ -111,9 +112,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $user_row = $user_result->fetch_assoc();
                     $pseudo = $user_row['pseudo'];
                     $lien = $user_row['lien'];
-                    echo  '<div class="profil"><a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a><p>'.$pseudo.'</p></div> <br>';
+                    if($pseudo!=$username){
+                        $users_found = true;
+                        echo  '<div class="profil"><a href="showprofil.php?pseudo='.$pseudo.'"><img src="'.$lien.'" width="80em"></a><p>'.$pseudo.'</p></div> <br>';
+                    }
                 }
             }
+            if($users_found==false){
+                echo "<p>Il n'y a personne qui a consulté votre profil</p>";
+            }
+
         }
         echo '</ul>';
     }

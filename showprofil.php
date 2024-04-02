@@ -5,6 +5,21 @@ if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
 }
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pistons & Passions</title>
+	<!-- Pour l'icone de l'onglet : -->
+	<link rel="shortcut icon" href="img/logo.png" />
+	<link rel="stylesheet" type="text/css" href="css/stylePro.css" />
+	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
+	<meta charset="utf-8">
+</head>
+
+<body>
+<?php
 if (isset($_GET['pseudo'])) {
     $username = $_GET['pseudo'];
     $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$username'";
@@ -66,19 +81,6 @@ if (isset($_GET['pseudo'])) {
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Pistons & Passions</title>
-	<!-- Pour l'icone de l'onglet : -->
-	<link rel="shortcut icon" href="img/logo.png" />
-	<link rel="stylesheet" type="text/css" href="css/stylePro.css" />
-	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
-	<meta charset="utf-8">
-</head>
-
-<body>
     <?php
         // Menu :
         include 'nonAccessiblePhpPages/header.php';

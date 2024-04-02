@@ -16,7 +16,7 @@ CREATE TABLE utilisateurs(
 
 DROP table messages;
 CREATE TABLE messages (
-  id int NOT NULL,
+  id int AUTO_INCREMENT PRIMARY KEY,
   content text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   pseudo_sender text NOT NULL,
   pseudo_recipient text NOT NULL
@@ -33,4 +33,9 @@ DROP table vus;
 CREATE TABLE vus(
   id int NOT NULL,
   liste_id VARCHAR(255)
-)
+);
+
+DROP table signalement;
+CREATE TABLE signalement(
+  messageId int NOT NULL
+);

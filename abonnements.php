@@ -6,62 +6,6 @@ if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
 }
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    if (isset($_POST['tarif'])) {
-        $tarif = $_POST['tarif'];
-        switch ($tarif) {
-            case 'Tarif1':
-                $date_fin_interval = '+1 month';
-                break;
-            case 'Tarif2':
-                $date_fin_interval = '+3 months';
-                break;
-            case 'Tarif3':
-                $date_fin_interval = '+1 year';
-                break;
-            default:
-                
-                $date_fin_interval = null;
-                break;
-        }
-    }
-
-    $username = $_SESSION['username'];
-    $query_user_id = "SELECT id FROM utilisateurs WHERE pseudo = '$username'";
-    $result_user_id = $conn->query($query_user_id);
-
-    if ($result_user_id->num_rows > 0) {
-        $row = $result_user_id->fetch_assoc();
-        $user_id = $row["id"];
-
-        
-        $query_existing_subscription = "SELECT * FROM abonnements WHERE id = '$user_id'";
-        $result_existing_subscription = $conn->query($query_existing_subscription);
-
-        if ($result_existing_subscription->num_rows > 0) {
-            
-            $row_existing = $result_existing_subscription->fetch_assoc();
-            $current_date_fin = $row_existing["date_fin"];
-            $new_date_fin = date('Y-m-d', strtotime($current_date_fin . ' ' . $date_fin_interval));
-            $sql = "UPDATE abonnements SET date_fin = '$new_date_fin' WHERE id = '$user_id'";
-        } else {
-            
-            $sql = "INSERT INTO abonnements (id, date_debut, date_fin) VALUES ('$user_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 MONTH))";
-        }
-
-        $sql_update_user = "UPDATE utilisateurs SET statut = 'abonne' WHERE pseudo = '$username'";
-
-        if ($conn->query($sql) === TRUE && $conn->query($sql_update_user) === TRUE) {
-            echo "Abonnement réussi !";
-        } else {
-            echo "Erreur lors de l'abonnement : " . $conn->error;
-        }
-    } else {
-        echo "Erreur : Utilisateur non trouvé.";
-    }
-}
 ?>
 
 
@@ -77,6 +21,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+            if (isset($_POST['tarif'])) {
+                $tarif = $_POST['tarif'];
+                switch ($tarif) {
+                    case 'Tarif1':
+                        $date_fin_interval = '+1 month';
+                        break;
+                    case 'Tarif2':
+                        $date_fin_interval = '+3 months';
+                        break;
+                    case 'Tarif3':
+                        $date_fin_interval = '+1 year';
+                        break;
+                    default:
+                
+                        $date_fin_interval = null;
+                        break;
+                }
+            }
+
+            $username = $_SESSION['username'];
+            $query_user_id = "SELECT id FROM utilisateurs WHERE pseudo = '$username'";
+            $result_user_id = $conn->query($query_user_id);
+
+            if ($result_user_id->num_rows > 0) {
+                $row = $result_user_id->fetch_assoc();
+                $user_id = $row["id"];
+
+        
+                $query_existing_subscription = "SELECT * FROM abonnements WHERE id = '$user_id'";
+                $result_existing_subscription = $conn->query($query_existing_subscription);
+
+                if ($result_existing_subscription->num_rows > 0) {
+            
+                    $row_existing = $result_existing_subscription->fetch_assoc();
+                    $current_date_fin = $row_existing["date_fin"];
+                    $new_date_fin = date('Y-m-d', strtotime($current_date_fin . ' ' . $date_fin_interval));
+                    $sql = "UPDATE abonnements SET date_fin = '$new_date_fin' WHERE id = '$user_id'";
+                } else {
+            
+                    $sql = "INSERT INTO abonnements (id, date_debut, date_fin) VALUES ('$user_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 MONTH))";
+                }
+
+                $sql_update_user = "UPDATE utilisateurs SET statut = 'abonne' WHERE pseudo = '$username'";
+
+                if ($conn->query($sql) === TRUE && $conn->query($sql_update_user) === TRUE) {
+                    echo "Abonnement réussi !";
+                } else {
+                    echo "Erreur lors de l'abonnement : " . $conn->error;
+                }
+            }
+        }
+    ?>
     
     <?php
         // Menu :
