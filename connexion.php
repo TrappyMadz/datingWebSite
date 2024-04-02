@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 include 'bdd.php';
 
 
@@ -36,22 +34,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
 </head>
-<body class="magicpattern">
-    <div id="logoBienv">
-    <h1>Bienvenue sur Piston et Passion</h1>
-        <img src="img/logo.png" alt="logo">
-        
-    </div>
-
+<body>
     <div id="Connexion">
         <h2>Connexion</h2>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-        <label for="username">Nom d'utilisateur:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Mot de passe:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" class="bouton" value="Se connecter">
-        </form>
+
+            <label for="username">Pseudo:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Mot de passe:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="submit" class="bouton" value="Se connecter">
+            </form>
+
         <br>
         <a href="inscription.php">Inscription</a>
     </div>
