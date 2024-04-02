@@ -1,3 +1,4 @@
+<?php
 session_start();
 if ( !isset($_SESSION['username'])  ) {
     header("Location: connexion.php");
@@ -5,7 +6,7 @@ if ( !isset($_SESSION['username'])  ) {
 }
 
 // Récupération du statut :
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 $username = $_SESSION['username'];
 $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
 $resultat = $conn->query($sql);
@@ -16,46 +17,48 @@ if ( !($statut == 'admin') ) {
     header("Location: accueil.php");
     exit();
 }
+if (isset($_GET["pseudo"]) ) {
+    $pseudo = $_GET['pseudo'];
+}
 
+// Création de la connexion
+$conn = new mysqli("localhost", "Madz", "Nathan-412", "bdd");
+
+// Vérification de la connexion
+if ($conn->connect_error) {
+    die("Connexion échouée : " . $conn->connect_error);
+}
+
+$sql = "DELETE FROM utilisateurs WHERE pseudo = '$pseudo'";
+
+if ($conn->query($sql) === TRUE) {
 ?>
-
-
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-	<title>Pistons & Passions</title>
+<title>Pistons & Passions</title>
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/styleAdmin.css" />
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
-    <!-- Pour avoir des icons : -->
+    <!-- Pour avoir des icons (la loupe) : -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
-
 <body>
-    
     <?php
-        // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
-
-    <div class="Page_Principale">
-
-        <h1> Page admin : </h1>
-
-        <h2> Tous les utilisateurs : </h2><br>
-        <?php    
-            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');           
-            $recupUser = $dbname->query('SELECT * FROM utilisateurs');
-            while($user = $recupUser->fetch()){
-                echo $user['pseudo'];
-                ?> <br> <?php
-            }
-        ?>
-    </div>
-
-
-
+    
+    <p id="validationMsg">L'utilisateur à été supprimé avec succés.<p>
 </body>
 </html>
+<?php
+        } else {
+            echo "Erreur lors de la suppression de l'utilisateur : " . $conn->error;
+        }       
+
+        // Fermeture de la connexion
+        $conn->close();
+?>

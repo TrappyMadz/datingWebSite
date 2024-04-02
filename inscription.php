@@ -1,5 +1,6 @@
 <?php
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
@@ -11,14 +12,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $city = $_POST['city'];
     
 
-    $sql = "INSERT INTO utilisateurs (nom, prenom, pseudo, email, mot_de_passe, adresse, ville, statut, lien) VALUES ('$name', '$surname','$username', '$email', '$password', '$address', '$city', 'utilisateur', 'https://cdn-icons-png.flaticon.com/512/20/20079.png')";
-    
-    if ($conn->query($sql) === TRUE) {
-        echo "Inscription réussie !";
-        header("Location: connexion.php");
-        exit();
+    $sql = "SELECT * FROM utilisateurs WHERE pseudo = '$username'";
+    $resultat = $conn->query($sql);
+    if ($resultat && $resultat->num_rows == 0) {
+        $sql = "INSERT INTO utilisateurs (nom, prenom, pseudo, email, mot_de_passe, adresse, ville, statut, lien) VALUES ('$name', '$surname','$username', '$email', '$password', '$address', '$city', 'utilisateur', 'https://cdn-icons-png.flaticon.com/512/20/20079.png')";
+        if ($conn->query($sql) === TRUE) {
+            echo "Inscription réussie !";
+            header("Location: connexion.php");
+            exit();
+        } else {
+            echo "Erreur: " . $sql . "<br>" . $conn->error;
+        }
     } else {
-        echo "Erreur: " . $sql . "<br>" . $conn->error;
+        echo "Pseudo déjà pris !";
     }
 }
 ?>

@@ -1,3 +1,4 @@
+<?php
 session_start();
 if ( !isset($_SESSION['username'])  ) {
     header("Location: connexion.php");
@@ -5,7 +6,7 @@ if ( !isset($_SESSION['username'])  ) {
 }
 
 // Récupération du statut :
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 $username = $_SESSION['username'];
 $sql = "SELECT statut FROM utilisateurs WHERE pseudo = '$username'";
 $resultat = $conn->query($sql);
@@ -16,7 +17,6 @@ if ( !($statut == 'admin') ) {
     header("Location: accueil.php");
     exit();
 }
-
 ?>
 
 
@@ -27,6 +27,7 @@ if ( !($statut == 'admin') ) {
 	<!-- Pour l'icone de l'onglet : -->
 	<link rel="shortcut icon" href="img/logo.png" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/styleAdmin.css"/>
 	<meta name="author" content="LAKOMICKI ROBLES CHARRIER CARRIAC" />
 	<meta charset="utf-8">
     <!-- Pour avoir des icons : -->
@@ -37,22 +38,25 @@ if ( !($statut == 'admin') ) {
     
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
     <div class="Page_Principale">
 
-        <h1> Page admin : </h1>
+        <h1> Messagerie : </h1>
+        <h2>  </h2>
 
-        <h2> Tous les utilisateurs : </h2><br>
-        <?php    
-            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');           
+        <?php
+            $pseudo_sender = $_GET['pseudo'];
+            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Madz', 'Nathan-412');           
             $recupUser = $dbname->query('SELECT * FROM utilisateurs');
             while($user = $recupUser->fetch()){
-                echo $user['pseudo'];
-                ?> <br> <?php
+                $pseudo = $user['pseudo'];
+                echo '<a class="liste" href="adminMessage.php?pseudo1='.$pseudo_sender.'&pseudo2='.$pseudo.'"> Messagerie avec '.$pseudo.' </a><br>';
+             
             }
         ?>
+
     </div>
 
 

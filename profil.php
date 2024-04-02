@@ -1,8 +1,6 @@
 <?php
 session_start();
-include 'nonAccessiblePhpPages/bdd.php';
-
-
+include 'bdd.php';
 if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
@@ -86,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
     <div class="Page_Principale">

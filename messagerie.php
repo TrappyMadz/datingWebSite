@@ -24,28 +24,18 @@ if (!isset($_SESSION['username'])) {
     
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
     <div class="Page_Principale">
 
         <h1> Messagerie : </h1>
-        <h2> (Là ya tous les utilisateirs de la bdd ; labda, abonnés et admin) </h2>
 
-        <?php
-
-            $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');           
-            $recupUser = $dbname->query('SELECT * FROM utilisateurs');
-            while($user = $recupUser->fetch()){
-                $pseudo = $user['pseudo'];
-                echo '<a href="message.php?pseudo='.$pseudo.'"> Messagerie avec '.$pseudo.' </a><br>';
-             
-            }
-        ?>
-
+        <a href="message.php">Exemple de convo</a>
     </div>
 
 
 
 </body>
 </html>
+

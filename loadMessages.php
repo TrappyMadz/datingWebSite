@@ -6,7 +6,7 @@
     }
     
     // Inclure le fichier de connexion à la base de données
-    include 'nonAccessiblePhpPages/bdd.php';
+    include 'bdd.php';
 
     // Rerécupère le pseudo du destinataire depuis l'URL
     if (isset($_GET['pseudo'])) {
@@ -22,7 +22,17 @@
         while ($message = $result->fetch_assoc()) {
             if ($message['pseudo_recipient'] == $_SESSION['username']) {
                 // Messages du destinataire :
-                echo "<p class='mess_recipient'>" . $message['content'] . "</p>";
+                ?>
+
+    <div class="destMSG">
+        <?php
+        echo "<p class='mess_recipient'>" . $message['content'] . "</p>";
+        echo "<a href='signaler.php?aSigna=".$message['id']."' class='optionMessUser'><img class='reportImg' src='img/Report.png'></a>
+                            </div>";
+    ?>
+</div>
+
+                <?php
             } else {
                 // Messages de l'expéditeur :
                 echo "<p class='mess_sender'>" . $message['content'] . "</p>";

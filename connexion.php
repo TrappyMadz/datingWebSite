@@ -1,6 +1,7 @@
 <?php
-include 'nonAccessiblePhpPages/bdd.php';
-session_start();
+
+include 'bdd.php';
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -37,12 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="Connexion">
         <h2>Connexion</h2>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-        <label for="username">Nom d'utilisateur:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Mot de passe:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" class="bouton" value="Se connecter">
-        </form>
+
+            <label for="username">Pseudo:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Mot de passe:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="submit" class="bouton" value="Se connecter">
+            </form>
+
         <br>
         <a href="inscription.php">Inscription</a>
     </div>

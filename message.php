@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
@@ -6,40 +7,26 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Inclure le fichier de connexion à la base de données
-include 'nonAccessiblePhpPages/bdd.php';
+include 'bdd.php';
 
 
 $pseudo_sender = $_SESSION['username'];
-$pseudo_recipient = '';
-
-//Récupère à qui on envoit le message :
-if (isset($_GET['pseudo'])) {
-    $pseudo_recipient = $_GET['pseudo'];
-}
+// - - - - - - - - -- - -  à changer en fct de à qui on envoie - - - - - - - - - - - - - - - -
+$pseudo_recipient = "b";
 
 
 // Envoi d'un mess :
-if ( ($_SERVER["REQUEST_METHOD"] == "POST") && !(empty($_POST['message']))) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $content = $_POST['message'];
 
-    // htmlspecialchars() -> empèche que la personne envoit du code
-    // nl2br() -> permet que le message contienne des sauts de lignes
-    $content = nl2br( htmlspecialchars($_POST['message']) );
+    $sql = "INSERT INTO messages (content, pseudo_sender, pseudo_recipient) VALUES ('$content', '$pseudo_sender', '$pseudo_recipient')";
 
-    if ($_POST['pseudo_recipient'] !== $pseudo_sender) {
-        $pseudo_recipient = $_POST['pseudo_recipient'];
-    }
-
-    // Utiliser des requêtes préparées pour éviter les injections SQL
-    $stmt = $conn->prepare("INSERT INTO messages (content, pseudo_sender, pseudo_recipient) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $content, $pseudo_sender, $pseudo_recipient);
-
-    if ($stmt->execute()) {
+    if ($conn->query($sql) === TRUE) {
         echo "Message envoyé !";
-        // Recharger la page avec le pseudo du destinataire dans l'URL
-        header("Location: message.php?pseudo=$pseudo_recipient");
-        exit();
+        // to reload the page just in case :
+        header("Location: message.php");
     } else {
-        echo "Erreur: " . $stmt->error;
+        echo "Erreur: " . $sql . "<br>" . $conn->error;
     }
 }
 
@@ -62,15 +49,13 @@ if ( ($_SERVER["REQUEST_METHOD"] == "POST") && !(empty($_POST['message']))) {
 	<meta charset="utf-8">
     <!-- Pour avoir des icons : -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- Pour import la biblio jquery (pour l'instantanéité) : -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
     
     <?php
         // Menu :
-        include 'nonAccessiblePhpPages/header.php';
+        include 'header.php';
     ?>
 
     <div class="Page_Principale">
@@ -87,49 +72,40 @@ if ( ($_SERVER["REQUEST_METHOD"] == "POST") && !(empty($_POST['message']))) {
                 <label for="message">Message :</label><br><br>
                 <textarea name="message" class="mess_zone" required></textarea>
                 <br><br>                
-                <!-- Ajout d'un champ caché pour le pseudo du destinataire -->
-                <input type="hidden" name="pseudo_recipient" value="<?php echo htmlspecialchars($pseudo_recipient); ?>">
                 <input type="submit" class="bouton" value="Envoyer">
             </form>
 
             <br><br><br>
-
-            <h2> Recup et affichage des messages : </h2>
             <section id="chat">
+                <h2> Recup et affichage des messages : </h2>
                 <?php
-                    // Utiliser des requêtes préparées pour éviter les injections SQL
-                    $stmt = $conn->prepare('SELECT * FROM messages WHERE (pseudo_sender = ? AND pseudo_recipient = ?) OR (pseudo_sender = ? AND pseudo_recipient = ?)');
-                    $stmt->bind_param("ssss", $_SESSION['username'], $pseudo_recipient, $pseudo_recipient, $_SESSION['username']);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    while ($message = $result->fetch_assoc()) {
-                        if ($message['pseudo_recipient'] == $_SESSION['username']) {
-                            // Messages du destinataire :
-                            echo "<p class='mess_recipient'>" . $message['content'] . "</p>";
-                        } else {
-                            // Messages de l'expéditeur :
-                            echo "<p class='mess_sender'>" . $message['content'] . "</p>";
+                    
+                    $dbname = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8;', 'Voidhi', 'TooVoonua4nu');
+                    $recupMessage = $dbname->prepare('SELECT * FROM messages WHERE pseudo_sender = ? AND pseudo_recipient = ? 
+                                                        OR pseudo_sender = ? AND pseudo_recipient = ?');              
+                    $recupMessage->execute(array($_SESSION['username'], $pseudo_recipient, $pseudo_recipient, $_SESSION['username']));
+                    while($message = $recupMessage->fetch()){
+                        if($message['pseudo_recipient']==$_SESSION['username']){
+                            // messages from the recipient :
+                            ?><p class='mess_recipient'>
+                                <?php echo $message['content'];?>
+                            </p><?php
+                        }else{
+                            // messages from the sender :
+                            ?><p class='mess_sender'>
+                                <?php echo $message['content'];?>
+                            </p><?php
                         }
+                        
                     }
                 ?>
             </section>
-                    
-
-
-            <!-- Instantanéité : -->
-            <script>
-                /* reload toutes les 1s la section id="chat" */
-                setInterval(function() {
-                    /* garde l'info du $pseudo_recipient dans le loadMessages.php */
-                    $('#chat').load('loadMessages.php?pseudo=<?php echo urlencode($pseudo_recipient); ?>');
-                }, 1000);
-
-            </script>
-
-
-
 
         </div>
+
+
+
+
     </div>
 </body>
 </html>

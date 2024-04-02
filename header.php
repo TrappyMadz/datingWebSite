@@ -27,5 +27,5 @@
             }
         ?>
 
-        <a href="nonAccessiblePhpPages/deconnexion.php" class="bouton">DÉCONNEXION</a>
+        <a href="deconnexion.php" class="bouton">DÉCONNEXION</a>
 </header>
